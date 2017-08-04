@@ -22,18 +22,17 @@ namespace BangazonCLI.Tests
             _db.CheckChildTable();
             _db.CheckToyTable();
         }
-        [Theory]
-        [InlineData(_customerModel)]
-        public void AddNewCustomer(Customer cust)
+        [Fact]
+        public void AddNewCustomer()
         {
-            var result= _customer.AddCustomer(cust);
+            var result= _customer.AddCustomer();
             Assert.True(result != 0);
         }
         [Fact]
-        public void getASingleCustomerToReturnAsActive(Customer cust)
+        public void getASingleCustomerToReturnAsActive()
         {
-            int RyanMcCartyId = _customer.AddCustomer(cust);
-            Customer ryan = _customer.getSingleCustomer(RyanMcCartyId);
+            int RyanMcCartyId = _customer.AddCustomer();
+            var ryan = _customer.getSingleCustomer(RyanMcCartyId);
             Assert.True(ryan.CustomerId == RyanMcCartyId);
         }
 
