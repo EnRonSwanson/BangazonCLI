@@ -2,13 +2,14 @@ using System;
 
 namespace Bangazon
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             // Seed the database if none exists
-            var db = new DatabaseInitializer();
-            db.VerifyDataExists();
+            var db = new DatabaseInterface("BANGAZON_CLI_DB");
+            db.RunCheckForTable();
+            // db.CheckToyTable();                                  // CHANGE this to CheckForTable once Andy's SQL gets merged
 
             // Present the main menu
             Console.WriteLine ("*************************************************");
@@ -42,7 +43,7 @@ namespace Bangazon
                 Console.WriteLine ("Enter customer phone number");
                 Console.Write ("> ");
                 string phoneNumber = Console.ReadLine();
-                CustomerManager manager = new CustomerManager();
+                // CustomerManager manager = new CustomerManager();
             }
         }
     }
