@@ -1,0 +1,53 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Data.Sqlite;
+using System.Collections;
+
+namespace BangazonCLI
+{
+    public class TableStatements
+    {
+        string customerTable = $@"create table customer (
+                            `customerid`	integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `fullname`	varchar(80) not null,
+                            `address` varchar(80) not null,
+                            `city` varchar(80) not null,
+                            `state` varchar(2) not null,
+                            `postalcode` int(5) not null,
+                            `phone` int(10) not null
+                        )";
+        string productTypeTable = $@"create table producttype (
+                            `producttypeid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `name` varchar(80) not null
+                        )";
+        string paymentTypeTable = $@"create table paymenttype (
+                            `paymenttypeid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `customerID` integer not null default 0,
+                            `accountnumber` interger not null,
+                            `type` varchar(80)
+                        )";
+        string orderTable = $@"create table order (
+                            `orderid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `customerID` integer not null default 0,
+                            `paymenttypeID` integer not null default 0,
+                            `datecreated` varchar(80) not null,
+                            `datecompleted` varchar(80)
+                        )";
+         string orderProductTable = $@"create table orderproduct (
+                            `orderproductid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `orderID` integer not null default 0,
+                            `productID` integer not null default 0
+                        )";
+        string productTable = $@"create table product (
+                            `productid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `producttypeID` integer not null default 0,
+                            `sellerID` integer not null default 0,
+                            `title` varchar(80) not null,
+                            `description` varchar(80) not null,
+                            `price` money not null,
+                            `datecreated` date not null
+                        )"; 
+    }
+}
