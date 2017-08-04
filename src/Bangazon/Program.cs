@@ -1,6 +1,6 @@
 using System;
 
-namespace Bangazon
+namespace BangazonCLI
 {
     public class Program
     {
