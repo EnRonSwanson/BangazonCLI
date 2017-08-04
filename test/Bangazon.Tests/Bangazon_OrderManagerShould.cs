@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Bangazon.Tests
+namespace BangazonCLI.Tests
 {
     public class OrderManagerShould
     {
