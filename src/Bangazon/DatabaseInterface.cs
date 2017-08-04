@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 using System.Collections;
-using System.Data.TableStatements
 
 // Mitchell wrote the table check method and commented this file
 // Andy wrote the SQL statements being passed in
 // Query, Delete, and Insert began as boiler from previous exercises and may have light customization
 
-namespace Bangazon
+namespace BangazonCLI
 {
     public class DatabaseInterface
     {
+        TableStatements table = new TableStatements();
         private string _connectionString;
         private SqliteConnection _connection;
 
@@ -90,12 +90,12 @@ namespace Bangazon
 
         //variables passed into CheckForTable come from Data.TableStatements, whose using statement is at the top of this file
         public void RunCheckForTable() {
-          CheckForTable(customer, customerTable);
-          CheckForTable(productType, productTypeTable);
-          CheckForTable(paymentType, paymentTypeTable);
-          CheckForTable(order, orderTable);
-          CheckForTable(product, productTable);
-          CheckForTable(orderProduct, orderProductTable);
+          CheckForTable("customer", table.customerTable);
+          CheckForTable("productType", table.productTypeTable);
+          CheckForTable("paymentType", table.paymentTypeTable);
+          CheckForTable("[order]", table.orderTable);                  // order is in [] to avoid conflicts with reserved word
+          CheckForTable("product", table.productTable);
+          CheckForTable("orderProduct", table.orderProductTable);
         }
 
         // checks for table name passed, and executes SQL statement to create the table if table doesn't exist
@@ -120,14 +120,15 @@ namespace Bangazon
                     Console.WriteLine(ex.Message);
                     if (ex.Message.Contains("no such table"))
                     {
-                        dbcmd.CommandText = $@"SQL_STATEMENT_GOES_HERE";                  // SQL statement passed in here to write X table
+                        Console.WriteLine(SQLstatement);
+                        dbcmd.CommandText = SQLstatement;                  // SQLstatement passed in here to write X table
                         try
                         {
                             dbcmd.ExecuteNonQuery ();
                         }
                         catch (Microsoft.Data.Sqlite.SqliteException crex)
                         {
-                            Console.WriteLine("Table already exists. Ignoring");
+                            Console.WriteLine("Tried to make a table, and failed.");
                         }
                         dbcmd.Dispose ();
                     }
