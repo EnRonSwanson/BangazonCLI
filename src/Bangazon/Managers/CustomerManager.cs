@@ -21,9 +21,25 @@ namespace BangazonCLI.Managers
             //int id= _db.Insert=($"Insert into Customer values({null},{cust.Name}, {cust.AccountCreationDate}, {cust.Street}, {cust.City}, {cust.State},{cust.zip}, {cust.Phone}");
             return 5;
         }
-        public List<Customer> getListCustomers(string name)
+        public List<Customer> GetListCustomers()
         {
-            return new List<Customer>();
+            _db.Query("select * FROM customer",
+                (SqliteDataReader reader) => {
+                    _customer.Clear();
+                    while (reader.Read ())
+                    {
+                        _customer.Add(new Customer(
+                            reader[1].ToString(), 
+                            reader.GetDateTime(2), 
+                            reader[3].ToString(), 
+                            reader[4].ToString(), 
+                            reader[5].ToString(), 
+                            reader.GetInt32(6),  
+                            reader[7].ToString()));
+                    }
+                });
+
+            return _customer;
         }
         public Customer getSingleCustomer (int id) =>  _customer.SingleOrDefault(guy => guy.CustomerId == id);
         
