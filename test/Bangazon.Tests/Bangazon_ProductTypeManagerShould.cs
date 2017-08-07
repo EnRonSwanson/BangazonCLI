@@ -22,7 +22,7 @@ namespace Bangazon.Tests
         [Fact]
         public void AddProductTypeShould()
         {
-            ProductType newProductType = new ProductType(1, "Home Decor");
+            ProductType newProductType = new ProductType( "Home Decor");
             int typeid = _productTypeManager.AddProductType(newProductType);
             Assert.True(typeid != 0); 
         }

@@ -17,9 +17,8 @@ namespace BangazonCLI.Models
         public float Price {get; set;}
         public int SellerId { get; set; } //this is the same as CustomerId
 
-        public Product(int id, int producttypeid, string title, int available, DateTime Date, string description, float price, int customerId)
+        public Product(int producttypeid, string title, int available, DateTime Date, string description, float price, int customerId)
         {
-                    ProductId = id;
                     ProductTypeId = producttypeid;
                     Title = title;
                     QuantityAvailable = available;

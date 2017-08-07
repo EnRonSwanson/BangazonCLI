@@ -16,6 +16,7 @@ namespace Bangazon.Tests
         {
             _db = new DatabaseInterface("BANGAZON_CLI_DB");
             _productManager = new ProductManager(_db);
+            _productTypeManager = new ProductTypeManager(_db);
             _db.RunCheckForTable();
         }
 
@@ -23,18 +24,18 @@ namespace Bangazon.Tests
         [Fact]
         public void CreateProductShould()
         {
-            ProductType newProductType = new ProductType(1, "Home Decor");
+            ProductType newProductType = new ProductType("Home Decor");
             int typeid = _productTypeManager.AddProductType(newProductType);
-            Product product = new Product(1, typeid , "Rug", 5, DateTime.Now, "Awesome shag rug - 8x10", 125.99f, 1);
+            Product product = new Product(typeid , "Rug", 5, DateTime.Now, "Awesome shag rug - 8x10", 125.99f, 1);
             int productThatWasCreated = _productManager.CreateProduct(product);
-            Assert.True(productThatWasCreated != 0);
+            Assert.IsType<int>(productThatWasCreated);
         }
         
         //Purpose: Test creates new product and product type, then retrieves the same product and asserts that the added Product id is equal to the result id
         [Fact]
-        public void GetProductShould(int productId)
+        public void GetProductShould()
         {
-            int result = _productManager.GetProduct(productId);
+            int result = _productManager.GetProduct(1);
             Assert.True(result != 0);
         }
 

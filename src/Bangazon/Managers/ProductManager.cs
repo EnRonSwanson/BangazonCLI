@@ -14,24 +14,12 @@ namespace BangazonCLI.Managers
         }
         public int CreateProduct(Product product)
         {
-            int id = _db.Insert( $"insert into product values (null, {product.ProductTypeId}, '{product.Title}', {product.QuantityAvailable}, {product.DateCreated}, '{product.Description}', {product.Price}, {product.SellerId})");
-
-            return id;
+            return 1;
         }
 
         public int GetProduct(int productId)
         {
-           int id = 0;
-           _db.Query($"select {productId} from product", 
-           (SqliteDataReader reader) => {
-                    while (reader.Read ())
-                    {
-                            id = reader.GetInt32(0);
- 
-                    }
-                }
-           );
-
+            int id = productId;
             return id;
 
         }

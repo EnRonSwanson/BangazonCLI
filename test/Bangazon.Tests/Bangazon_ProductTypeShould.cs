@@ -10,13 +10,12 @@ namespace Bangazon.Tests
         private DateTime _dateTime = DateTime.Now;
         public ProductTypeShould()
         {
-            _productType = new ProductType(1, "Home Decor");
+            _productType = new ProductType("Home Decor");
         }
 
         [Fact]
         public void addProductType()
         {
-            Assert.Equal(_productType.ProductTypeId, 1);
             Assert.Equal(_productType.Type, "Home Decor");
         }
 
