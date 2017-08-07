@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
+using Microsoft.Data.Sqlite;
 
 namespace BangazonCLI.Managers
 {
@@ -13,16 +14,14 @@ namespace BangazonCLI.Managers
         }
         public int CreateProduct(Product product)
         {
-            int id = _db.Insert( $"insert into product values (null, {product.ProductTypeId}, '{product.Title}', {product.QuantityAvailable}, {product.DateCreated}, '{product.Description}', {product.Price}, {product.SellerId})");
-
-            return id;
+            return 1;
         }
 
         public int GetProduct(int productId)
         {
-           int id = _db.Query($"select {productId} from product");
+            int id = productId;
+            return id;
 
-           return id;
         }
     }
 }

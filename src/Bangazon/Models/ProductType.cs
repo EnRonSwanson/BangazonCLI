@@ -12,9 +12,8 @@ namespace BangazonCLI.Models
     public int ProductTypeId { get; set; }
     public string Type { get; set; }
 
-    public ProductType(int id, string type)
+    public ProductType(string type)
     {
-        ProductTypeId = id;
         Type = type;
     }
   }  
