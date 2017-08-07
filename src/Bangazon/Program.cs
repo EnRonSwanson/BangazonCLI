@@ -1,4 +1,5 @@
 using System;
+using BangazonCLI.Managers;
 
 namespace BangazonCLI
 {
@@ -6,6 +7,8 @@ namespace BangazonCLI
     {
         public static void Main(string[] args)
         {
+            ActiveCustomer activeCustomer = new ActiveCustomer();
+
             // Seed the database if none exists
             var db = new DatabaseInterface("BANGAZON_CLI_DB");
             db.RunCheckForTable();
@@ -49,7 +52,7 @@ namespace BangazonCLI
             // If option 4 was chosen, create a new product for the logged in user
             // Written by Mitchell
             if (choice == 4)
-            {
+            {   
                 // product id is auto generated
                 Console.WriteLine ("Enter product title");
                 Console.Write ("> ");
@@ -65,11 +68,9 @@ namespace BangazonCLI
                 Console.Write ("> ");
                 string QuantityAvailable = Console.ReadLine();
                 // customer id calls getter for active customer
-                int customerId = ActiveCustomer.getActiveCustomerId();
-
-
+                int? customerId = activeCustomer.getActiveCustomerId();
 
             }
         }
-    }
+  }
 }
