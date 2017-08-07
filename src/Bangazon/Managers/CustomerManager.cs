@@ -18,12 +18,12 @@ namespace BangazonCLI.Managers
 
         public int AddCustomer(Customer cust)
         {
-            int id= _db.Customer=($"insert into Customer values({null},{cust.Name}, {cust.AccountCreationDate})");
-            return id;
+            //int id= _db.Insert=($"Insert into Customer values({null},{cust.Name}, {cust.AccountCreationDate}, {cust.Street}, {cust.City}, {cust.State},{cust.zip}, {cust.Phone}");
+            return 5;
         }
-        public List<string> getListCustomers(string name)
+        public List<Customer> getListCustomers(string name)
         {
-            return new List<string>();
+            return new List<Customer>();
         }
         public Customer getSingleCustomer (int id) =>  _customer.SingleOrDefault(guy => guy.CustomerId == id);
         
