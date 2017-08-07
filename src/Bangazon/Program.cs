@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using BangazonCLI.Managers;
+using BangazonCLI.Models;
 
 namespace BangazonCLI
 {
@@ -16,6 +19,7 @@ namespace BangazonCLI
             Console.WriteLine ("Welcome to Bangazon! Command Line Ordering System");
             Console.WriteLine ("*************************************************");
             Console.WriteLine ("1. Create a customer account");
+            Console.WriteLine ("2. Choose an active customer");
 			Console.Write ("> ");
 
 			// Read in the user's choice
@@ -44,6 +48,20 @@ namespace BangazonCLI
                 Console.Write ("> ");
                 string phoneNumber = Console.ReadLine();
                 // CustomerManager manager = new CustomerManager();
+            }
+            if(choice == 2)
+            {
+                CustomerManager _manager = new CustomerManager(db);
+                Console.WriteLine("*************************************************");
+                List<Customer> allCustomers = _manager.GetListCustomers();
+                for (int i = 1; i < allCustomers.Count; i++ )
+                {
+                    Console.WriteLine($"{i}. {allCustomers[i-1].Name}");
+                }
+                Console.WriteLine("*************************************************");
+                Console.WriteLine("Select a customer to be active");
+                Console.Write("> ");
+                
             }
         }
     }
