@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
 using BangazonCLI.Managers;
+using BangazonCLI;
 using Xunit;
 
 namespace Bangazon.Tests
@@ -13,9 +14,9 @@ namespace Bangazon.Tests
         private readonly ProductTypeManager _productTypeManager;
         public ProductManagerShould()
         {
-            _db = new DatabaseInterface("BANGAZON_TEST_DB");
+            _db = new DatabaseInterface("BANGAZON_CLI_DB");
             _productManager = new ProductManager(_db);
-            _db.CheckForTable();
+            _db.RunCheckForTable();
         }
 
         //Purpose: Test is creating a new product type, creating a new product, and asserting the returned product id is not null)

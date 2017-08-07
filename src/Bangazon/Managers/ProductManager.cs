@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
+using Microsoft.Data.Sqlite;
 
 namespace BangazonCLI.Managers
 {
@@ -20,9 +21,19 @@ namespace BangazonCLI.Managers
 
         public int GetProduct(int productId)
         {
-           int id = _db.Query($"select {productId} from product");
+           int id = 0;
+           _db.Query($"select {productId} from product", 
+           (SqliteDataReader reader) => {
+                    while (reader.Read ())
+                    {
+                            id = reader.GetInt32(0);
+ 
+                    }
+                }
+           );
 
-           return id;
+            return id;
+
         }
     }
 }
