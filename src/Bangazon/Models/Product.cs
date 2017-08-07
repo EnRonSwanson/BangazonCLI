@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+// written by Madeline, some revisions by Mitchell
+// commented by Mitchell
+// establishes Product class for use by Manager files, especially ProductManager
+
 namespace BangazonCLI.Models
 {
     public class Product 
     {
         public int ProductId { get; set; }
-        public int ProductTypeId { get; set; }
-        public string Title { get; set;}
+        public int ProductTypeId { get; set; }      // user input from selection or adding new product type
+        public string Title { get; set;}            // user input
         
-        public int QuantityAvailable {get; set;}
-        public DateTime DateCreated {get; set;}
-        public string Description {get; set;}
-        public float Price {get; set;}
-        public int SellerId { get; set; } //this is the same as CustomerId
+        public int QuantityAvailable {get; set;}    // user input
+        public DateTime DateCreated {get; set;}     // auto generated
+        public string Description {get; set;}       // user input
+        public float Price {get; set;}              // user input
+        public int SellerId { get; set; }           // this is the same as CustomerId
 
         public Product(int producttypeid, string title, int available, DateTime Date, string description, float price, int customerId)
         {
@@ -27,7 +31,11 @@ namespace BangazonCLI.Models
                     Price = price;
                     SellerId = customerId;
         }
-    }
+
+        public Product()
+        {
+        }
+  }
 
     
 }
