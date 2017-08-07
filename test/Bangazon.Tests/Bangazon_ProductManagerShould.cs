@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
 using BangazonCLI.Managers;
+using BangazonCLI;
 using Xunit;
 
 namespace Bangazon.Tests
