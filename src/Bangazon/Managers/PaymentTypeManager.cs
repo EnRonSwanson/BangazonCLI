@@ -4,7 +4,8 @@ using System.Linq;
 using Microsoft.Data.Sqlite;
 using BangazonCLI.Models;
 
-//Author: Andrew Rock
+// Authors: Andrew and Mitchell
+// Interaction with payment type class instances
 
 namespace BangazonCLI
 {

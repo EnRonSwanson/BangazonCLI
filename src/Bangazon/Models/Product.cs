@@ -11,7 +11,7 @@ namespace BangazonCLI.Models
 {
     public class Product 
     {
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         public int ProductTypeId { get; set; }      // user input from selection or adding new product type
         public string Title { get; set;}            // user input
         
@@ -21,15 +21,16 @@ namespace BangazonCLI.Models
         public float Price {get; set;}              // user input
         public int SellerId { get; set; }           // this is the same as CustomerId
 
-        public Product(int producttypeid, string title, int available, DateTime Date, string description, float price, int customerId)
+        public Product(int producttypeid, string title, int available, string description, float price, int customerId)
         {
-                    ProductTypeId = producttypeid;
-                    Title = title;
-                    QuantityAvailable = available;
-                    DateCreated = Date;
-                    Description = description;
-                    Price = price;
-                    SellerId = customerId;
+            ProductId = null;
+            ProductTypeId = producttypeid;
+            Title = title;
+            QuantityAvailable = available;
+            DateCreated = DateTime.Now;
+            Description = description;
+            Price = price;
+            SellerId = customerId;
         }
 
         public Product()
