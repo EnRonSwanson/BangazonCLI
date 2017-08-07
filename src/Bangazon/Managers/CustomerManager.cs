@@ -10,16 +10,20 @@ namespace BangazonCLI.Managers
     {
         private List<Customer> _customer = new List<Customer>();
         private DatabaseInterface _db;
-
+        private string _connectionString = $"Data Source={Environment.GetEnvironmentVariable("BANGAZON_CLI_DB")}";
+        private SqliteConnection _connection;
+    
         public CustomerManager(DatabaseInterface db)
         {
             _db = db;
+            _connection = new SqliteConnection(_connectionString);
         }
 
         public int AddCustomer(Customer cust)
         {
-            //int id= _db.Insert=($"Insert into Customer values({null},{cust.Name}, {cust.AccountCreationDate}, {cust.Street}, {cust.City}, {cust.State},{cust.zip}, {cust.Phone}");
-            return 5;
+            var id= _db.Insert($"Insert into Customer values (null,'{cust.Name}','{cust.AccountCreationDate}','{cust.Street}','{cust.City}', '{cust.State}','{cust.zip}', '{cust.Phone}')");
+
+            return id;
         }
         public List<Customer> getListCustomers(string name)
         {
