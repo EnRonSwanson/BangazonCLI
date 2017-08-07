@@ -26,14 +26,7 @@ namespace BangazonCLI.Tests
         [Fact]
         public void AddNewCustomer()
         {
-            Assert.Equal(_customerModel.Name, "Ryan McCarty");
-            Assert.Equal(_customerModel.AccountCreationDate, _datetime);
-            Assert.Equal(_customerModel.Street, "3041 Old Field Way");
-            Assert.Equal(_customerModel.City, "Lexington");
-            Assert.Equal(_customerModel.State, "Ky");
-            Assert.Equal(_customerModel.zip, 40513);
-            Assert.Equal(_customerModel.Phone, "859-588-2850");
-
+            Assert.IsType<Customer>(_customerModel);
         }
         [Fact]
         public void getASingleCustomerToReturnAsActive()
