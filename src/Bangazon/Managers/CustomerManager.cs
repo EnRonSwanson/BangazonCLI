@@ -21,6 +21,9 @@ namespace BangazonCLI.Managers
             //int id= _db.Insert=($"Insert into Customer values({null},{cust.Name}, {cust.AccountCreationDate}, {cust.Street}, {cust.City}, {cust.State},{cust.zip}, {cust.Phone}");
             return 5;
         }
+
+        //Method Author: Andrew Rock
+        //Queries DB for all customers and adds them to a list and returns that list
         public List<Customer> GetListCustomers()
         {
             _db.Query("select * FROM customer",

@@ -49,6 +49,8 @@ namespace BangazonCLI
                 string phoneNumber = Console.ReadLine();
                 // CustomerManager manager = new CustomerManager();
             }
+            // Set Active Customer Menu
+            // Gets a list of customers and displays them
             if(choice == 2)
             {
                 CustomerManager _manager = new CustomerManager(db);
