@@ -46,6 +46,8 @@ namespace BangazonCLI
                 string phoneNumber = Console.ReadLine();
                 // CustomerManager manager = new CustomerManager();
             }
+            // If option 4 was chosen, create a new product for the logged in user
+            // Written by Mitchell
             if (choice == 4)
             {
                 // product id is auto generated
@@ -63,6 +65,7 @@ namespace BangazonCLI
                 Console.Write ("> ");
                 string QuantityAvailable = Console.ReadLine();
                 // customer id calls getter for active customer
+                int customerId = ActiveCustomer.getActiveCustomerId();
 
 
 
