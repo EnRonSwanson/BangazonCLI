@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 using System.Collections;
+using BangazonCLI.Models;
 
 // Mitchell wrote the table check method and commented this file
 // Andy wrote the SQL statements being passed in

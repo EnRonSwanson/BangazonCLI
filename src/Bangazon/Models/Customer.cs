@@ -11,10 +11,27 @@ namespace BangazonCLI.Models
   //Methods: Customer constructor method to set default values (1 is true and 0 is false) and date account is created
   public class Customer
   {
+
     public int CustomerId { get; set; }
     public string Name { get; set; }
-    public DateTime AccountCreationDate { get; set; }
+    public string AccountCreationDate { get; set; }
  
+    public string Street {get; set;}
+    public string City {get; set;}
+    public string State {get; set;}
+     public int zip {get;set;}
+    public string Phone {get; set;}
 
+    public Customer(string Name, string AccountCreationDate, string Street, string City, string State, int zip, string Phone)
+    {
+      this.Name= Name;
+      this.AccountCreationDate= AccountCreationDate;
+      this.Street= Street;
+      this.City= City;
+      this.State= State;
+      this.zip= zip;
+      this.Phone=Phone;
+    }
+   
   }
 }
