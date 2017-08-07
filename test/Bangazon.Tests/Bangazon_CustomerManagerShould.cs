@@ -15,9 +15,10 @@ namespace BangazonCLI.Tests
         private readonly CustomerManager _customer;
         private readonly Customer _customerModel;
          private readonly DatabaseInterface _db;
+        private DateTime _datetime= DateTime.Now;
         public CustomerManagerShould()
         {
-            _customerModel= new Customer("Ryan McCarty","2017-08-07T09:57:53.6076182-05:00", "3041 Old Field Way", "Lexington", "Ky", 40513, "859-588-2850");
+            _customerModel= new Customer("Ryan McCarty", _datetime, "3041 Old Field Way", "Lexington", "Ky", 40513, "859-588-2850");
             _db = new DatabaseInterface("BANGAZON_CLI_DB");
             _customer= new CustomerManager(_db);
             _db.RunCheckForTable();
@@ -26,7 +27,7 @@ namespace BangazonCLI.Tests
         public void AddNewCustomer()
         {
             Assert.Equal(_customerModel.Name, "Ryan McCarty");
-            Assert.Equal(_customerModel.AccountCreationDate, "2017-08-07T09:57:53.6076182-05:00");
+            Assert.Equal(_customerModel.AccountCreationDate, _datetime);
             Assert.Equal(_customerModel.Street, "3041 Old Field Way");
             Assert.Equal(_customerModel.City, "Lexington");
             Assert.Equal(_customerModel.State, "Ky");
