@@ -23,8 +23,8 @@ namespace BangazonCLI.Tests
         [Fact]
         public void CreateOrderShould()
         {
-            Product kite = new Product(1, "Kite", 2, DateTime.Now, "string description", 12, 1);
-            var newOrder = _manager.CreateOrder(kite);
+            
+            var newOrder = _manager.CreateOrder();
             Assert.IsType<Order>(newOrder);
         }
 
