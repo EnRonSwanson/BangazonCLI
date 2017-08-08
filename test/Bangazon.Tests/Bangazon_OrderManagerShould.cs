@@ -9,7 +9,7 @@ using Xunit;
 
 namespace BangazonCLI.Tests
 {
-    public class OrderManagerShould //: IDisposable
+    public class OrderManagerShould : IDisposable
     {
 
         private readonly OrderManager _manager;
@@ -49,10 +49,10 @@ namespace BangazonCLI.Tests
             Assert.IsType<List<Order>>(completedOrders);
         }
 
-        // public void Dispose()
-        // {
-        //     _db.Delete("DELETE FROM product");
-        //     _db.Delete("DELETE FROM order");
-        // }
+        public void Dispose()
+        {
+            _db.Delete("DELETE FROM product");
+            _db.Delete("DELETE FROM order");
+        }
     }
 }
