@@ -46,9 +46,10 @@ namespace BangazonCLI
                             `producttypeID` integer not null default 0,
                             `sellerID` integer not null default 0,
                             `title` varchar(80) not null,
+                            `quantityavailable` integer NOT NULL default 0,
                             `description` varchar(80) not null,
                             `price` money not null,
                             `datecreated` date not null
-                        )"; 
+                        )";
     }
 }

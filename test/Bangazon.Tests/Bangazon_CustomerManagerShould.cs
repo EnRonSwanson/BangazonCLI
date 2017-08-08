@@ -37,9 +37,9 @@ namespace BangazonCLI.Tests
         }
 
         [Fact]
-        public void getListOfAllCustomers()
+        public void GetListOfAllCustomersShould()
         {
-            var result = _customer.getListCustomers("Ryan McCarty");
+            var result = _customer.GetListCustomers();
             Assert.IsType<List<Customer>>(result);
         }
     }
