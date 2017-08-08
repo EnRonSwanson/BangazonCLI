@@ -79,10 +79,10 @@ namespace BangazonCLI
                     Console.WriteLine("Select a customer to be active");
                     Console.Write("> ");
                     string setThisCustomerAsActive = Console.ReadLine();
-                    activeCustomer.setActiveCustomerId(setThisCustomerAsActive);
-                    var active= activeCustomer.getActiveCustomerId();
-                    // potential getter to convert customer ID to its name
-                    Console.WriteLine("active customer ID is " + active);
+                    activeCustomer.setActiveCustomerId(Int32.Parse(setThisCustomerAsActive));
+                    var active= ActiveCustomer.activeCustomerId;
+                    // potential getter to convert customer ID to its corresponding name
+                    Console.WriteLine("Active customer ID is: " + active);
                 }
                 if (choice ==3)
                 {
@@ -118,8 +118,8 @@ namespace BangazonCLI
                     Console.WriteLine ("Enter quantity available");
                     Console.Write ("> ");
                     string QuantityAvailable = Console.ReadLine();
-                    string SellerId = activeCustomer.getActiveCustomerId();         // customer id calls getter for active customer
-                    int newProductId = productManager.CreateProduct(new Product(Int32.Parse(Type), Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), Int32.Parse(SellerId)));
+                    int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
+                    int newProductId = productManager.CreateProduct(new Product(Int32.Parse(Type), Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                 }
             } while (choice != 12);
         }
