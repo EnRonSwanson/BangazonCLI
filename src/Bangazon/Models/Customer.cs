@@ -24,6 +24,7 @@ namespace BangazonCLI.Models
 
     public Customer(string Name, string Street, string City, string State, string zip, string Phone)
     {
+      this.CustomerId= CustomerId;
       this.Name= Name;
       this.AccountCreationDate= DateTime.Now;
       this.Street= Street;
@@ -33,6 +34,6 @@ namespace BangazonCLI.Models
       this.Phone=Phone;
     }
 
-
-    }
+  }
+   
 }

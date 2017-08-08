@@ -54,7 +54,8 @@ namespace BangazonCLI
             if (choice == 2)
             {
                 Console.WriteLine("All available customers");
-                
+                List<Customer> custList= new List<Customer>();
+                custList= manager.getListCustomers();
             }
         }
     }
