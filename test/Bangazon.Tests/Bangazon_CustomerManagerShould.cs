@@ -5,7 +5,8 @@ using BangazonCLI.Managers;
 using BangazonCLI.Models;
 using BangazonCLI;
 
-
+// Author: Ryan and minor refactor by Mitchell
+// Tests methods in Customer Manager
 
 namespace BangazonCLI.Tests
 {
@@ -18,7 +19,7 @@ namespace BangazonCLI.Tests
         private DateTime _datetime= DateTime.Now;
         public CustomerManagerShould()
         {
-            _customerModel= new Customer("Ryan McCarty", _datetime, "3041 Old Field Way", "Lexington", "Ky", 40513, "859-588-2850");
+            _customerModel= new Customer("Ryan McCarty", "3041 Old Field Way", "Lexington", "Ky", "40513", "859-588-2850");
             _db = new DatabaseInterface("BANGAZON_CLI_DB");
             _customer= new CustomerManager(_db);
             _db.RunCheckForTable();
