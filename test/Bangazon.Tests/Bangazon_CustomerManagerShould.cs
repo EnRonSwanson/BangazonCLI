@@ -15,7 +15,7 @@ namespace BangazonCLI.Tests
         //Create a new instance of CustomerManager
         private readonly CustomerManager _customer;
         private readonly Customer _customerModel;
-         private readonly DatabaseInterface _db;
+        private readonly DatabaseInterface _db;
         private DateTime _datetime= DateTime.Now;
         public CustomerManagerShould()
         {
