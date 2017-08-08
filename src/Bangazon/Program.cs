@@ -19,7 +19,6 @@ namespace BangazonCLI
             ProductManager productManager = new ProductManager(db);
             // Seed the database if none exists
             db.RunCheckForTable();
-                                  // CHANGE this to CheckForTable once Andy's SQL gets merged
             CustomerManager manager = new CustomerManager(db);
 
             // Read in the user's choice
