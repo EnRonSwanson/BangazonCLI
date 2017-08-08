@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BangazonCLI.Models
 {
   //Purpose: Contain customer info, including potential products to sell and customer's orders
-  //Auther: Team code
+  //Author: Team code
   //Methods: Customer constructor method to set default values (1 is true and 0 is false) and date account is created
   public class Customer
   {
@@ -19,10 +19,10 @@ namespace BangazonCLI.Models
     public string Street {get; set;}
     public string City {get; set;}
     public string State {get; set;}
-     public int zip {get;set;}
+     public string zip {get;set;}
     public string Phone {get; set;}
 
-    public Customer(string Name, DateTime AccountCreationDate, string Street, string City, string State, int zip, string Phone)
+    public Customer(string Name, string Street, string City, string State, string zip, string Phone)
     {
       this.Name= Name;
       this.AccountCreationDate= DateTime.Now;
@@ -32,6 +32,7 @@ namespace BangazonCLI.Models
       this.zip= zip;
       this.Phone=Phone;
     }
-   
-  }
+
+
+    }
 }
