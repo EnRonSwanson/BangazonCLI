@@ -4,7 +4,7 @@ using BangazonCLI.Managers;
 using BangazonCLI.Models;
 using Xunit;
 
-//Auther: Andrew Rock
+//Author: Andrew Rock, minor refactoring by Mitchell
 //Tests for the Order Manager Methods
 
 namespace BangazonCLI.Tests
@@ -22,10 +22,10 @@ namespace BangazonCLI.Tests
 
         [Fact]
         public void CreateOrderShould()
-        {
-            
+        {            
             var newOrderId = _manager.CreateOrder();
             Assert.IsType<int>(newOrderId);
+
         }
         [Fact]
         public void GetIncompleteOrderForCustomerShould()

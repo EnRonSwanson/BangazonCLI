@@ -53,8 +53,9 @@ namespace BangazonCLI
                 Console.Write ("> ");
                 string phoneNumber = Console.ReadLine();   
 
-                int custId= manager.AddCustomer(new Customer(fullName, street,city, state, postalCode, phoneNumber));
+                int custId= manager.AddCustomer(new Customer(fullName, street,city, state, Int32.Parse(postalCode), phoneNumber));
             }
+
             // If option 4 was chosen, create a new product for the logged in user
             // Written by Mitchell
             if (choice == 4)
@@ -87,14 +88,19 @@ namespace BangazonCLI
             {
                 CustomerManager _manager = new CustomerManager(db);
                 Console.WriteLine("*************************************************");
-                List<Customer> allCustomers = _manager.GetListCustomers();
-                for (int i = 1; i < allCustomers.Count; i++ )
+                Console.WriteLine("Select a customer to be active");
+               
+                List<Customer> allCustomers = _manager.GetListCustomers();               
+                for (int i = 0; i < allCustomers.Count; i++ )
                 {
-                    Console.WriteLine($"{i}. {allCustomers[i-1].Name}");
+                    Console.WriteLine($"{i+1}. {allCustomers[i].Name}");
                 }
                 Console.WriteLine("*************************************************");
-                Console.WriteLine("Select a customer to be active");
                 Console.Write("> ");
+                string custName= Console.ReadLine();
+                Customer guy= _manager.getSingleCustomer(int.Parse(custName));
+                Console.WriteLine("The active customer is", guy);
+
                 
             }
         }

@@ -19,10 +19,10 @@ namespace BangazonCLI.Models
     public string Street {get; set;}
     public string City {get; set;}
     public string State {get; set;}
-     public string zip {get;set;}
+     public int zip {get;set;}
     public string Phone {get; set;}
 
-    public Customer(string Name, string Street, string City, string State, string zip, string Phone)
+    public Customer(string Name, string Street, string City, string State, int zip, string Phone)
     {
       this.Name= Name;
       this.AccountCreationDate= DateTime.Now;
@@ -35,4 +35,5 @@ namespace BangazonCLI.Models
 
 
     }
+   
 }
