@@ -36,9 +36,18 @@ namespace Bangazon.Tests
         
         //Purpose: Test creates new product and product type, then retrieves the same product and asserts that the added Product id is equal to the result id
         [Fact]
-        public void GetProductShould()
+        public void setProductShould()
         {
-            int result = _productManager.GetProduct(1);
+            int id= 1;
+            int result = _productManager.setSingleProduct(id);
+            Assert.True(result != 0);
+        }
+        [Fact]
+        public void getProductToMakeChangesTo()
+        {
+            int id= 1;
+            var test= _productManager.setSingleProduct(id);
+            int result= _productManager.getSingleProduct();
             Assert.True(result != 0);
         }
 

@@ -92,8 +92,9 @@ namespace BangazonCLI
                     Console.WriteLine("Enter the account # associated with your payment type");
                     Console.Write("> ");
                     string accountNum= Console.ReadLine();
-                    string customerId= activeCustomer.getActiveCustomerId();
-                    int paymentId= payment.CreatePaymentType(new PaymentType(Int32.Parse(customerId) ,paymentType, accountNum));
+                    int customerId = ActiveCustomer.activeCustomerId;
+                    int paymentId= payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
+
                 }
 
 
