@@ -32,7 +32,7 @@ namespace BangazonCLI
         public string orderTable = $@"create table [order] (
                             `orderid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                             `customerID` integer not null default 0,
-                            `paymenttypeID` integer not null default 0,
+                            `paymenttypeID` integer,
                             `datecreated` varchar(80) not null,
                             `datecompleted` varchar(80)
                         )";
