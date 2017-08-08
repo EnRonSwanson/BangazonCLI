@@ -29,6 +29,14 @@ namespace BangazonCLI.Tests
             int newPayment = _manager.CreatePaymentType(newType);
             Assert.True(newPayment != 0);
         } 
+        [Fact]
+        public void GetCustomerPaymentTypes()
+        {
+            PaymentType newType = new PaymentType(1, "Visa", "123456-123456");
+            int newPayment = _manager.CreatePaymentType(newType);
+            List<PaymentType> _paymentTypes = _manager.GetCustomerPaymentTypes(1);
+            Assert.IsType<List<PaymentType>>(_paymentTypes);  
+        }
 
         public void Dispose()
         {
