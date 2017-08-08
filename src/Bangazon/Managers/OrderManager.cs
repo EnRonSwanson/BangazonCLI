@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
 using Microsoft.Data.Sqlite;
+using BangazonCLI.Managers;
 
 namespace BangazonCLI.Managers
 {
