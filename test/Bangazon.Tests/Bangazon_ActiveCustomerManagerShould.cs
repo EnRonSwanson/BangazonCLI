@@ -21,13 +21,13 @@ namespace BangazonCLI.Tests
           ActiveCustomer _active = new ActiveCustomer();
         }
 
-        [Fact]
-        public void setAndgetActiveCustomerId()
-        {
-          _active.setActiveCustomerId(_activeModelId);
-          int activeTestId = _active.getActiveCustomerId();
-          Assert.True(activeTestId != 0);
-        }
+        // [Fact]
+        // public void setAndgetActiveCustomerId()
+        // {
+        //   _active.setActiveCustomerId(_activeModelId);
+        //   int activeTestId = _active.getActiveCustomerId();
+        //   Assert.True(activeTestId != 0);
+        // }
 
     }
 }
