@@ -4,7 +4,7 @@ using BangazonCLI.Managers;
 using BangazonCLI.Models;
 using Xunit;
 
-//Auther: Andrew Rock
+//Author: Andrew Rock, minor refactoring by Mitchell
 //Tests for the Order Manager Methods
 
 namespace BangazonCLI.Tests
@@ -23,7 +23,7 @@ namespace BangazonCLI.Tests
         [Fact]
         public void CreateOrderShould()
         {
-            Product kite = new Product(1, "Kite", 2, DateTime.Now, "string description", 12, 1);
+            Product kite = new Product(1, "Kite", 2, "string description", 12, 1);
             var newOrder = _manager.CreateOrder(kite);
             Assert.IsType<Order>(newOrder);
         }

@@ -10,7 +10,7 @@ namespace Bangazon.Tests
         private DateTime _dateTime = DateTime.Now;
         public ProductShould()
         {
-            _product = new Product(1, "Chair", 2, _dateTime , "awesome chair", 100.99f, 1);
+            _product = new Product(1, "Chair", 2, "awesome chair", 100.99f, 1);
         }
 
         [Fact]
