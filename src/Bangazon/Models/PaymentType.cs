@@ -14,8 +14,15 @@ namespace BangazonCLI.Models
     public int PaymentTypeId { get; set; }
     public int CustomerId { get; set; }
     public string Type {get; set;}
-    public int AccountNumber {get; set;}
+    public string AccountNumber {get; set;}
  
+    public PaymentType(int custId, string type, string accountNumber)
+    {
+      CustomerId = custId;
+      Type = type;
+      AccountNumber = accountNumber;
+
+    }
 
   }
 }
