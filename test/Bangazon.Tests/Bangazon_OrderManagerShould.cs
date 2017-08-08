@@ -17,7 +17,7 @@ namespace BangazonCLI.Tests
         
         public OrderManagerShould()
         {
-            _manager = new OrderManager();
+            _manager = new OrderManager(_db);
         }
 
         [Fact]
