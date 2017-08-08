@@ -4,7 +4,8 @@ using System.Linq;
 using Microsoft.Data.Sqlite;
 using BangazonCLI.Models;
 
-//Author: Andrew Rock
+// Authors: Andrew and Mitchell
+// Interaction with payment type class instances
 
 namespace BangazonCLI
 {
@@ -15,10 +16,12 @@ namespace BangazonCLI
         {
             _db = db;
         }
-
-        public PaymentType CreatePaymentType()
+        //Author: Madeline
+        //Insert new row into the payment type table
+        public int CreatePaymentType(PaymentType paymentType)
         {
-            return new PaymentType();
+            int id = _db.Insert( $"insert into paymenttype values (null, {paymentType.CustomerId}, '{paymentType.Type}', '{paymentType.AccountNumber}')");
+            return id;
         }
     }
 }

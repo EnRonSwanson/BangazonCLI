@@ -7,6 +7,7 @@ namespace BangazonCLI.Managers
 {
     public class ProductManager
     {
+        private List<Product> _products = new List<Product>();
         private DatabaseInterface _db;
         public ProductManager(DatabaseInterface db)
         {
@@ -14,14 +15,24 @@ namespace BangazonCLI.Managers
         }
         public int CreateProduct(Product product)
         {
-            return 1;
+            // Inserting new producet into db
+            int newProductId = _db.Insert( $@"insert into product values (
+            null, 
+            '{product.ProductTypeId}', 
+            '{product.SellerId}', 
+            '{product.Title}', 
+            '{product.QuantityAvailable}', 
+            '{product.Description}', 
+            '{product.Price}', 
+            '{product.DateCreated}')");
+
+            return newProductId;
         }
 
         public int GetProduct(int productId)
         {
             int id = productId;
             return id;
-
         }
     }
 }
