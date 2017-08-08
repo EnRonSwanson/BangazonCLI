@@ -9,14 +9,14 @@ namespace BangazonCLI
     {
       private int? _activeCustomerId { get; set; }
 
-      public void setActiveCustomerId(int customerId)
+      public void setActiveCustomerId(string customerId)
       {
-          _activeCustomerId = customerId;
+          _activeCustomerId = Int32.Parse(customerId);
       }
 
-      public int? getActiveCustomerId()
+      public string getActiveCustomerId()
       {
-          return _activeCustomerId;
+          return _activeCustomerId.ToString();
       }
 
     }

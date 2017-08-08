@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using BangazonCLI.Models;
 using Microsoft.Data.Sqlite;
 
+// Authors: Madeline and Mitchell
+// Accessible methods regarding Product
+
 namespace BangazonCLI.Managers
 {
     public class ProductManager
@@ -15,7 +18,7 @@ namespace BangazonCLI.Managers
         }
         public int CreateProduct(Product product)
         {
-            // Inserting new producet into db
+            // Inserting new product into db
             int newProductId = _db.Insert( $@"insert into product values (
             null, 
             '{product.ProductTypeId}', 

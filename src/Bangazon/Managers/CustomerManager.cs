@@ -37,11 +37,11 @@ namespace BangazonCLI.Managers
                     {
                         _customer.Add(new Customer(
                             reader[1].ToString(), 
-                            reader.GetDateTime(2), 
+                            // reader.GetDateTime(2), 
                             reader[3].ToString(), 
                             reader[4].ToString(), 
                             reader[5].ToString(), 
-                            reader.GetInt32(6),  
+                            reader[6].ToString(),  
                             reader[7].ToString()));
                     }
                 });

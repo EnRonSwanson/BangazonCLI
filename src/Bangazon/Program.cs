@@ -4,6 +4,9 @@ using System.Linq;
 using BangazonCLI.Managers;
 using BangazonCLI.Models;
 
+// Authors above the methods
+// Menu options for user experience
+
 namespace BangazonCLI
 {
     public class Program
@@ -43,7 +46,7 @@ namespace BangazonCLI
                 Console.WriteLine ("Enter customer state");
                 Console.Write ("> ");
                 string state = Console.ReadLine();
-                Console.WriteLine ("Enter customer street adress");
+                Console.WriteLine ("Enter customer street address");
                 Console.Write ("> ");
                 string street = Console.ReadLine();
                 Console.WriteLine ("Enter customer postal code");
@@ -52,36 +55,10 @@ namespace BangazonCLI
                 Console.WriteLine ("Enter customer phone number");
                 Console.Write ("> ");
                 string phoneNumber = Console.ReadLine();   
-
                 int custId= manager.AddCustomer(new Customer(fullName, street,city, state, postalCode, phoneNumber));
             }
-            // If option 4 was chosen, create a new product for the logged in user
-            // Written by Mitchell
-            if (choice == 4)
-            {   
-                // product id is auto generated
-                Console.WriteLine ("Enter product title");
-                Console.Write ("> ");
-                string Title = Console.ReadLine();
-                // eventually the user will product type from list of product types, or add new
-                Console.WriteLine ("Enter product type");
-                Console.Write ("> ");
-                string Type = "1";                                     // this will need to be user selection from product types
-                Console.WriteLine ("Enter product description");
-                Console.Write ("> ");
-                string Description = Console.ReadLine();
-                Console.WriteLine ("Enter price");
-                Console.Write ("> ");
-                string Price = Console.ReadLine();
-                Console.WriteLine ("Enter quantity available");
-                Console.Write ("> ");
-                string QuantityAvailable = Console.ReadLine();
-                // int? customerId = activeCustomer.getActiveCustomerId();         // customer id calls getter for active customer
-                string SellerId = "1";                                             // this needs changing after testing
-
-                int newProductId = productManager.CreateProduct(new Product(Int32.Parse(Type), Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), Int32.Parse(SellerId)));
-            }
             // Set Active Customer Menu
+            // Written by Andy and Mitchell
             // Gets a list of customers and displays them
             if(choice == 2)
             {
@@ -95,7 +72,33 @@ namespace BangazonCLI
                 Console.WriteLine("*************************************************");
                 Console.WriteLine("Select a customer to be active");
                 Console.Write("> ");
-                
+                string setThisCustomerAsActive = Console.ReadLine();
+                activeCustomer.setActiveCustomerId(setThisCustomerAsActive);
+            }
+            // If option 4 was chosen, create a new product for the logged in user
+            // Written by Mitchell
+            if (choice == 4)
+            {   
+                // product id is auto generated
+                Console.WriteLine ("Enter product title");
+                Console.Write ("> ");
+                string Title = Console.ReadLine();
+                // maybe eventually the user will choose product type from list of product types, or add new
+                Console.WriteLine ("Enter product type");
+                Console.Write ("> ");
+                string Type = "1";                                     // this might need to be user selection from product types
+                Console.WriteLine ("Enter product description");
+                Console.Write ("> ");
+                string Description = Console.ReadLine();
+                Console.WriteLine ("Enter price");
+                Console.Write ("> ");
+                string Price = Console.ReadLine();
+                Console.WriteLine ("Enter quantity available");
+                Console.Write ("> ");
+                string QuantityAvailable = Console.ReadLine();
+                string SellerId = activeCustomer.getActiveCustomerId();         // customer id calls getter for active customer
+                // string SellerId = "1";                                       // this needs nuking after testing
+                int newProductId = productManager.CreateProduct(new Product(Int32.Parse(Type), Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), Int32.Parse(SellerId)));
             }
         }
   }
