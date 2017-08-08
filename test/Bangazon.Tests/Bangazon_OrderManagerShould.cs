@@ -24,22 +24,23 @@ namespace BangazonCLI.Tests
         public void CreateOrderShould()
         {
             
-            var newOrder = _manager.CreateOrder();
-            Assert.IsType<Order>(newOrder);
+            var newOrderId = _manager.CreateOrder();
+            Assert.IsType<int>(newOrderId);
+        }
+        [Fact]
+        public void GetIncompleteOrderForCustomerShould()
+        {
+            var incompleteOrderId = _manager.GetIncompleteOrderForCustomer();
+            Assert.IsType<int?>(incompleteOrderId);
         }
 
-        [Fact]
-        public void GetAllOrdersForCustomerShould()
-        {
-            var orderList = _manager.GetAllOrdersForCustomer();
-            Assert.IsType<List<Order>>(orderList);
-        }
 
         [Fact]
         public void AddPaymentTypeToOrderShould()
         {
-            var orderWithPayment = _manager.AddPaymentTypeToOrder();
-            Assert.IsType<Order>(orderWithPayment);
+            var orderWithPayment = _manager.AddPaymentTypeToOrder(1); //the parameter passed is the id of the payment type
+            Assert.True(orderWithPayment);
+            
         }
 
         [Fact]
