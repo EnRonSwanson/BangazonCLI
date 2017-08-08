@@ -94,6 +94,7 @@ namespace BangazonCLI
                     string accountNum= Console.ReadLine();
                     int customerId = ActiveCustomer.activeCustomerId;
                     int paymentId= payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
+
                 }
 
 
