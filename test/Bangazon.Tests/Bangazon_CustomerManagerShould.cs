@@ -10,7 +10,7 @@ using BangazonCLI;
 
 namespace BangazonCLI.Tests
 {
-    public class CustomerManagerShould
+    public class CustomerManagerShould : IDisposable
     {
         //Create a new instance of CustomerManager
         private readonly CustomerManager _customer;
@@ -42,6 +42,11 @@ namespace BangazonCLI.Tests
         {
             var result = _customer.GetListCustomers();
             Assert.IsType<List<Customer>>(result);
+        }
+        public void Dispose()
+        {
+            _db.Delete("DELETE FROM customer");
+        
         }
     }
 }

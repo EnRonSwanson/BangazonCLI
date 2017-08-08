@@ -17,6 +17,7 @@ namespace BangazonCLI
             var db = new DatabaseInterface("BANGAZON_CLI_DB");
             ActiveCustomer activeCustomer = new ActiveCustomer();
             ProductManager productManager = new ProductManager(db);
+            PaymentTypeManager payment= new PaymentTypeManager(db);
             // Seed the database if none exists
             db.RunCheckForTable();
             CustomerManager manager = new CustomerManager(db);
@@ -32,6 +33,7 @@ namespace BangazonCLI
                 Console.WriteLine ("*************************************************");
                 Console.WriteLine ("1. Create a customer account");
                 Console.WriteLine ("2. Choose an active customer");
+                Console.WriteLine ("3. Create a payment type");
                 Console.WriteLine ("4. Add product to sell");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
@@ -82,6 +84,19 @@ namespace BangazonCLI
                     // potential getter to convert customer ID to its name
                     Console.WriteLine("active customer ID is " + active);
                 }
+                if (choice ==3)
+                {
+                    Console.WriteLine("Enter a payment type (visa, mastercard, etc)");
+                    Console.Write("> ");
+                    string paymentType= Console.ReadLine();
+                    Console.WriteLine("Enter the account # associated with your payment type");
+                    Console.Write("> ");
+                    string accountNum= Console.ReadLine();
+                    string customerId= activeCustomer.getActiveCustomerId();
+                    int paymentId= payment.CreatePaymentType(new PaymentType(Int32.Parse(customerId) ,paymentType, accountNum));
+                }
+
+
                 // If option 4 was chosen, create a new product for the logged in user
                 // Written by Mitchell
                 if (choice == 4)
