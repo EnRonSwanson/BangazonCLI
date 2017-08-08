@@ -33,25 +33,25 @@ namespace BangazonCLI.Managers
             return newProductId;
         }
 
-        public int getSingleProduct()
+        public Product setSingleProduct(int productId)
         {
-            return _custProd;
-        }
-
-        public int setSingleProduct(int customerId)
-        {
-           	int x=0;
-             _db.Query($"select * from product where product.sellerId = '{customerId}'",
+           	Product singleProduct= null;
+             _db.Query($"select * from product where product.productId = {productId}",
              (SqliteDataReader reader) =>{
                  _products.Clear();
                 while(reader.Read())
                 {
-                    x= reader.GetInt32(0);
-               }
+                  singleProduct =new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString() ,reader.GetInt32(5),reader.GetInt32(6)  ){ProductId= reader.GetInt32(0)};
+                        
+                  
+                }
  
             });
-            _custProd= x;
-            return x;
+            return singleProduct;
+        }
+        public void editProduct(int productId)
+        {
+            
         }
 
 

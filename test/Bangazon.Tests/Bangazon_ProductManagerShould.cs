@@ -38,17 +38,13 @@ namespace Bangazon.Tests
         [Fact]
         public void setProductShould()
         {
+            ProductType newProductType = new ProductType("Home Decor");
+            int typeid = _productTypeManager.AddProductType(newProductType);
+            Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
+            int productThatWasCreated = _productManager.CreateProduct(product);
             int id= 1;
-            int result = _productManager.setSingleProduct(id);
-            Assert.True(result != 0);
-        }
-        [Fact]
-        public void getProductToMakeChangesTo()
-        {
-            int id= 1;
-            var test= _productManager.setSingleProduct(id);
-            int result= _productManager.getSingleProduct();
-            Assert.True(result != 0);
+            var result = _productManager.setSingleProduct(productThatWasCreated);
+            Assert.IsType<Product>(result);
         }
 
         public void Dispose()
