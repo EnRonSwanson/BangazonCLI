@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using BangazonCLI.Managers;
 using BangazonCLI.Models;
@@ -12,9 +13,10 @@ namespace BangazonCLI
             var db = new DatabaseInterface("BANGAZON_CLI_DB");
             ActiveCustomer activeCustomer = new ActiveCustomer();
             ProductManager productManager = new ProductManager(db);
-
             // Seed the database if none exists
             db.RunCheckForTable();
+                                  // CHANGE this to CheckForTable once Andy's SQL gets merged
+            CustomerManager manager = new CustomerManager(db);
 
             // Present the main menu
             Console.WriteLine ("*************************************************");
@@ -31,25 +33,26 @@ namespace BangazonCLI
             // If option 1 was chosen, create a new customer account
             if (choice == 1)
             {
-                Console.WriteLine ("Enter customer first name");
+                Console.WriteLine ("Enter customer full name");
                 Console.Write ("> ");
-                string firstName = Console.ReadLine();
-                Console.WriteLine ("Enter customer last name");
-                Console.Write ("> ");
-                string lastName = Console.ReadLine();
+                string fullName = Console.ReadLine();
                 Console.WriteLine ("Enter customer city");
                 Console.Write ("> ");
                 string city = Console.ReadLine();
                 Console.WriteLine ("Enter customer state");
                 Console.Write ("> ");
                 string state = Console.ReadLine();
+                Console.WriteLine ("Enter customer street adress");
+                Console.Write ("> ");
+                string street = Console.ReadLine();
                 Console.WriteLine ("Enter customer postal code");
                 Console.Write ("> ");
                 string postalCode = Console.ReadLine();
                 Console.WriteLine ("Enter customer phone number");
                 Console.Write ("> ");
-                string phoneNumber = Console.ReadLine();
-                // CustomerManager manager = new CustomerManager();
+                string phoneNumber = Console.ReadLine();   
+
+                int custId= manager.AddCustomer(new Customer(fullName, street,city, state, postalCode, phoneNumber));
             }
             // If option 4 was chosen, create a new product for the logged in user
             // Written by Mitchell

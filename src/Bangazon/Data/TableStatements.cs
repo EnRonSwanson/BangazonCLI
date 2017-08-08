@@ -11,8 +11,8 @@ namespace BangazonCLI
     {
         public string customerTable = $@"create table customer (
                             `customerid`	integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-                            `firstname`	varchar(80) not null,
-                            `lastname`	varchar(80) not null,
+                            `fullname`	varchar(80) not null,
+                            `datecreated`	varchar(80) not null,
                             `address` varchar(80) not null,
                             `city` varchar(80) not null,
                             `state` varchar(2) not null,
