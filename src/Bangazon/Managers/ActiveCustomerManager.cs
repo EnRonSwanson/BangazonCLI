@@ -7,16 +7,11 @@ namespace BangazonCLI
 {
     public class ActiveCustomer
     {
-      private string _activeCustomerId { get; set; }
+      public static int activeCustomerId { get; set; }
 
-      public void setActiveCustomerId(string customerId)
+      public void setActiveCustomerId(int customerId)
       {
-          _activeCustomerId = customerId;
-      }
-
-      public string getActiveCustomerId()
-      {
-          return _activeCustomerId;
+          activeCustomerId = customerId;
       }
 
     }
