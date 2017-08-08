@@ -5,6 +5,9 @@ using BangazonCLI.Managers;
 using BangazonCLI;
 using Xunit;
 
+// Authors: Madeline and Mitchell
+// Tests Product Manager
+
 namespace Bangazon.Tests
 {
     public class ProductManagerShould: IDisposable
@@ -26,7 +29,7 @@ namespace Bangazon.Tests
         {
             ProductType newProductType = new ProductType("Home Decor");
             int typeid = _productTypeManager.AddProductType(newProductType);
-            Product product = new Product(typeid , "Rug", 5, DateTime.Now, "Awesome shag rug - 8x10", 125.99f, 1);
+            Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
             int productThatWasCreated = _productManager.CreateProduct(product);
             Assert.IsType<int>(productThatWasCreated);
         }

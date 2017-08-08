@@ -5,7 +5,8 @@ using BangazonCLI.Managers;
 using BangazonCLI.Models;
 using BangazonCLI;
 
-
+// Author: Ryan and minor refactor by Mitchell
+// Tests methods in Customer Manager
 
 namespace BangazonCLI.Tests
 {
