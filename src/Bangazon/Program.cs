@@ -20,6 +20,7 @@ namespace BangazonCLI
             Console.WriteLine ("Welcome to Bangazon! Command Line Ordering System");
             Console.WriteLine ("*************************************************");
             Console.WriteLine ("1. Create a customer account");
+            Console.WriteLine ()
 			Console.Write ("> ");
 
 			// Read in the user's choice
@@ -49,6 +50,10 @@ namespace BangazonCLI
                 string phoneNumber = Console.ReadLine();   
 
                 int custId= manager.AddCustomer(new Customer(fullName, street,city, state, postalCode, phoneNumber));
+            }
+            if (choice == 2)
+            {
+
             }
         }
     }
