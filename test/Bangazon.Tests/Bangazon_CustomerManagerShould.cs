@@ -10,7 +10,7 @@ using BangazonCLI;
 
 namespace BangazonCLI.Tests
 {
-    public class CustomerManagerShould
+    public class CustomerManagerShould : IDisposable
     {
         //Create a new instance of CustomerManager
         private readonly CustomerManager _customer;
@@ -19,7 +19,7 @@ namespace BangazonCLI.Tests
         private DateTime _datetime= DateTime.Now;
         public CustomerManagerShould()
         {
-            _customerModel= new Customer("Ryan McCarty", "3041 Old Field Way", "Lexington", "Ky", "40513", "859-588-2850");
+            _customerModel= new Customer("Ryan McCarty", "3041 Old Field Way", "Lexington", "Ky", 40513, "859-588-2850");
             _db = new DatabaseInterface("BANGAZON_CLI_DB");
             _customer= new CustomerManager(_db);
             _db.RunCheckForTable();
@@ -30,11 +30,19 @@ namespace BangazonCLI.Tests
             Assert.IsType<Customer>(_customerModel);
         }
         [Fact]
-        public void getASingleCustomerToReturnAsActive()
+        public void setASingleCustomerToReturnAsActive()
         {
-            int RyanMcCartyId = _customer.AddCustomer(_customerModel);
-            var ryan = _customer.getSingleCustomer(RyanMcCartyId);
-            Assert.IsType<Customer>(_customerModel);
+            string RyanMcCartyName = "Ryan McCarty";
+            var ryan = _customer.setSingleCustomer(RyanMcCartyName);
+            Assert.True(ryan !=0);
+        }
+        [Fact]
+        public void getASingleCustomer()
+        {
+            string RyanMcCartyName = "Ryan McCarty";
+            var ryan = _customer.setSingleCustomer(RyanMcCartyName);
+            int result= _customer.getSingleCustomer();
+            Assert.True(result !=0);
         }
 
         [Fact]
@@ -43,5 +51,11 @@ namespace BangazonCLI.Tests
             var result = _customer.GetListCustomers();
             Assert.IsType<List<Customer>>(result);
         }
+
+              public void Dispose()
+        {
+            _db.Delete("DELETE FROM customer");
+        }
+
     }
 }

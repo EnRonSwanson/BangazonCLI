@@ -11,10 +11,10 @@ namespace BangazonCLI.Managers
         {
             _db = db;
         }
-        // public int AddProductType(ProductType productType)
-        // {
-        //     int id = _db.Insert( $"insert into producttype values (null, '{productType.Type}')");
-        //     return id;
-        // }
+        public int AddProductType(ProductType productType)
+        {
+            int id = _db.Insert( $"insert into producttype values (null, '{productType.Type}')");
+            return id;
+        }
     }
 }

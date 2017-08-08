@@ -15,9 +15,11 @@ namespace BangazonCLI
             ProductManager productManager = new ProductManager(db);
             // Seed the database if none exists
             db.RunCheckForTable();
-                                  // CHANGE this to CheckForTable once Andy's SQL gets merged
+             int choice=0;                     // CHANGE this to CheckForTable once Andy's SQL gets merged
             CustomerManager manager = new CustomerManager(db);
+            while (choice != 12){
 
+            
             // Present the main menu
             Console.WriteLine ("*************************************************");
             Console.WriteLine ("Welcome to Bangazon! Command Line Ordering System");
@@ -28,7 +30,7 @@ namespace BangazonCLI
 			Console.Write ("> ");
 
 			// Read in the user's choice
-			int choice;
+			
 			Int32.TryParse (Console.ReadLine(), out choice);
 
             // If option 1 was chosen, create a new customer account
@@ -98,11 +100,12 @@ namespace BangazonCLI
                 Console.WriteLine("*************************************************");
                 Console.Write("> ");
                 string custName= Console.ReadLine();
-                Customer guy= _manager.getSingleCustomer(int.Parse(custName));
-                Console.WriteLine("The active customer is", guy);
-
+                int guy= _manager.setSingleCustomer(allCustomers[Int32.Parse(custName)-1].Name);
+                var active= _manager.getSingleCustomer();
+                Console.WriteLine("active user is" + active);
                 
             }
+            }
         }
-  }
+    }
 }   

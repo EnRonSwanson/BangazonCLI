@@ -9,6 +9,7 @@ namespace BangazonCLI.Managers
     public class CustomerManager
     {
         private List<Customer> _customer = new List<Customer>();
+        private int _active;
         private DatabaseInterface _db;
         private string _connectionString = $"Data Source={Environment.GetEnvironmentVariable("BANGAZON_CLI_DB")}";
         private SqliteConnection _connection;
@@ -47,7 +48,27 @@ namespace BangazonCLI.Managers
 
             return _customer;
         }
-        public Customer getSingleCustomer (int id) =>  _customer.SingleOrDefault(guy => guy.CustomerId == id);
+        public int getSingleCustomer()
+        {
+            return _active;
+        }
+
+
+        public int setSingleCustomer (string name)
+        {
+            int x=0;
+            _db.Query($"select customerId from customer where customer.fullname = '{name}'",
+            (SqliteDataReader reader) =>{
+                _customer.Clear();
+               while(reader.Read())
+               {
+                    x= reader.GetInt32(0);
+               }
+
+            });
+            _active= x;
+            return x;
+        } 
         
     }
 }
