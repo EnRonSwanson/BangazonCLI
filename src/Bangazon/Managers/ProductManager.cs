@@ -32,10 +32,12 @@ namespace BangazonCLI.Managers
             return newProductId;
         }
 
-        public int GetProduct(int productId)
+        public int GetSingleProduct(int productId)
         {
             int id = productId;
             return id;
         }
+
+
     }
 }

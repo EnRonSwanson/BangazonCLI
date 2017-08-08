@@ -38,7 +38,7 @@ namespace Bangazon.Tests
         [Fact]
         public void GetProductShould()
         {
-            int result = _productManager.GetProduct(1);
+            int result = _productManager.GetSingleProduct(1);
             Assert.True(result != 0);
         }
 
