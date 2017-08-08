@@ -23,6 +23,7 @@ namespace BangazonCLI
             Console.WriteLine ("Welcome to Bangazon! Command Line Ordering System");
             Console.WriteLine ("*************************************************");
             Console.WriteLine ("1. Create a customer account");
+            Console.WriteLine ("2. Choose an active customer");
             Console.WriteLine ("4. Add product to sell");
 			Console.Write ("> ");
 
@@ -79,6 +80,22 @@ namespace BangazonCLI
                 string SellerId = "1";                                             // this needs changing after testing
 
                 int newProductId = productManager.CreateProduct(new Product(Int32.Parse(Type), Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), Int32.Parse(SellerId)));
+            }
+            // Set Active Customer Menu
+            // Gets a list of customers and displays them
+            if(choice == 2)
+            {
+                CustomerManager _manager = new CustomerManager(db);
+                Console.WriteLine("*************************************************");
+                List<Customer> allCustomers = _manager.GetListCustomers();
+                for (int i = 1; i < allCustomers.Count; i++ )
+                {
+                    Console.WriteLine($"{i}. {allCustomers[i-1].Name}");
+                }
+                Console.WriteLine("*************************************************");
+                Console.WriteLine("Select a customer to be active");
+                Console.Write("> ");
+                
             }
         }
   }
