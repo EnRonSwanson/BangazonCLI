@@ -10,16 +10,16 @@ using BangazonCLI;
 
 namespace BangazonCLI.Tests
 {
-    public class CustomerManagerShould
+    public class CustomerManagerShould : IDisposable
     {
         //Create a new instance of CustomerManager
         private readonly CustomerManager _customer;
         private readonly Customer _customerModel;
-         private readonly DatabaseInterface _db;
+        private readonly DatabaseInterface _db;
         private DateTime _datetime= DateTime.Now;
         public CustomerManagerShould()
         {
-            _customerModel= new Customer("Ryan McCarty", "3041 Old Field Way", "Lexington", "Ky", "40513", "859-588-2850");
+            _customerModel= new Customer("Ryan McCarty", "3041 Old Field Way", "Lexington", "Ky",40513, "859-588-2850");
             _db = new DatabaseInterface("BANGAZON_CLI_DB");
             _customer= new CustomerManager(_db);
             _db.RunCheckForTable();
@@ -42,6 +42,11 @@ namespace BangazonCLI.Tests
         {
             var result = _customer.GetListCustomers();
             Assert.IsType<List<Customer>>(result);
+        }
+        public void Dispose()
+        {
+            _db.Delete("DELETE FROM customer");
+        
         }
     }
 }

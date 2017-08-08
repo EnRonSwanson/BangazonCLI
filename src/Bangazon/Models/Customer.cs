@@ -19,7 +19,7 @@ namespace BangazonCLI.Models
     public string Street {get; set;}
     public string City {get; set;}
     public string State {get; set;}
-     public int zip {get;set;}
+    public int zip {get;set;}
     public string Phone {get; set;}
 
     public Customer(string Name, string Street, string City, string State, int zip, string Phone)
