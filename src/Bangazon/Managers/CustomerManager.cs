@@ -40,7 +40,7 @@ namespace BangazonCLI.Managers
                             reader[3].ToString(), 
                             reader[4].ToString(), 
                             reader[5].ToString(), 
-                            reader[6].ToString(),  
+                            reader.GetInt32(6),  
                             reader[7].ToString()));
                     }
                 });

@@ -59,25 +59,28 @@ namespace BangazonCLI
                     Console.WriteLine ("Enter customer phone number");
                     Console.Write ("> ");
                     string phoneNumber = Console.ReadLine();   
-                    int custId= manager.AddCustomer(new Customer(fullName, street,city, state, postalCode, phoneNumber));
+                    int custId= manager.AddCustomer(new Customer(fullName, street, city, state, Int32.Parse(postalCode), phoneNumber));
                 }
                 // Set Active Customer Menu
-                // Written by Andy and Mitchell
+                // Written by Ryan, Andy, and Mitchell
                 // Gets a list of customers and displays them
                 if(choice == 2)
                 {
                     CustomerManager _manager = new CustomerManager(db);
                     Console.WriteLine("*************************************************");
                     List<Customer> allCustomers = _manager.GetListCustomers();
-                    for (int i = 1; i < allCustomers.Count; i++ )
+                    for (int i = 0; i < allCustomers.Count; i++ )
                     {
-                        Console.WriteLine($"{i}. {allCustomers[i-1].Name}");
+                        Console.WriteLine($"{i+1}. {allCustomers[i].Name}");
                     }
                     Console.WriteLine("*************************************************");
                     Console.WriteLine("Select a customer to be active");
                     Console.Write("> ");
                     string setThisCustomerAsActive = Console.ReadLine();
                     activeCustomer.setActiveCustomerId(setThisCustomerAsActive);
+                    var active= activeCustomer.getActiveCustomerId();
+                    // potential getter to convert customer ID to its name
+                    Console.WriteLine("active customer ID is " + active);
                 }
                 // If option 4 was chosen, create a new product for the logged in user
                 // Written by Mitchell
