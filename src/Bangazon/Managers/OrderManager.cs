@@ -1,23 +1,75 @@
 using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
+using Microsoft.Data.Sqlite;
+using BangazonCLI.Managers;
+using BangazonCLI;
 
 namespace BangazonCLI.Managers
 {
+    //Initial Methods by: Andrew Rock
     public class OrderManager
     {
-        public Order CreateOrder(Product productToAdd)
+        ActiveCustomer activeManager = new ActiveCustomer();
+        private List<Order> _orderList = new List<Order>();
+        private DatabaseInterface _db;
+        public OrderManager(DatabaseInterface db)
         {
-            return new Order();
+            _db = db;
+        }
+        //Method Author: Andrew Rock 
+        //Creates a new open order 
+        public int CreateOrder()
+        {
+            //Checks to see if there is already an existing incomplete order
+            int? existingOrder = GetIncompleteOrderForCustomer();
+            if(existingOrder != null)
+            {
+                return (int)existingOrder;
+
+            } else
+            {
+                //if no incomplete order already exists then make a new one
+                int? customerID = activeManager.getActiveCustomerId();
+                Order newOrder = new Order((int)customerID);
+                int newOrderId= _db.Insert($"INSERT INTO [order] (orderId, customerId, paymentTypeId, dateCreated, dateCompleted) VALUES (null, {customerID}, null, {DateTime.Now}, null)");
+                return newOrderId; 
+            }
         }
 
-        public List<Order> GetAllOrdersForCustomer()
+        //Method Author: Andrew Rock
+        //Checks to see if the actie customer already has an incomplete order
+        //returns null if no incomplete order, otherwise returns id of incomplete order
+        public int? GetIncompleteOrderForCustomer()
         {
-            return new List<Order>();
+            int? customerID = activeManager.getActiveCustomerId();
+            int? incompleteOrderId = null;
+            _db.Query($"SELECT o.orderid FROM [order] WHERE o.paymentTypeId =  null AND o.customerId = {customerID}",
+                    (SqliteDataReader reader) => {
+                    while (reader.Read ())
+                    {
+                        incompleteOrderId = reader.GetInt32(0);
+                        
+                    }
+                });
+
+            return incompleteOrderId;
         }
-        public Order AddPaymentTypeToOrder()
+        //Method Author: Andrew Rock
+        //Finds the outstanding incomplete order and active customer
+        // and then assigns the payment type passed into the method onto the order
+
+        public bool AddPaymentTypeToOrder(int paymentTypeId)
         {
-            return new Order();
+            int customerID = (int)activeManager.getActiveCustomerId();
+            int orderId = (int)GetIncompleteOrderForCustomer();
+            int confirmedID = _db.Insert($"PUT INTO [order] o (o.orderid, o.customerid, o.paymentTypeID) VALUES ({orderId}, {customerID}, {paymentTypeId})");
+            if(orderId == confirmedID)
+            {
+                return true;
+            } else {
+                return false;
+            }
         }
         public List<Order> GetAllCompletedOrders()
         {
