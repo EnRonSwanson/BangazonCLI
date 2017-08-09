@@ -74,6 +74,11 @@ namespace BangazonCLI.Managers
            _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
            return true;
         }
+        public bool deleteProduct(int productId)
+        {
+            _db.Delete($"DELETE from product  where product.productId={productId}");
+            return true;
+        }
 
         public List<Product> GetListOfProducts()
         {
