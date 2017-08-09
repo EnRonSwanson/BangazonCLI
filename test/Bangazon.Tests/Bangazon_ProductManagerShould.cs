@@ -76,6 +76,16 @@ namespace Bangazon.Tests
             List<Product> listofProducts = _productManager.GetListOfProducts();
             Assert.IsType<List<Product>>(listofProducts);
         }
+        [Fact]
+        public void deleteAProductFromTheSystem()
+        {
+            ProductType newProductType = new ProductType("Home Decor");
+            int typeid = _productTypeManager.AddProductType(newProductType);
+            Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
+            int productThatWasCreated = _productManager.CreateProduct(product);
+            var result= _productManager.deleteProduct(productThatWasCreated);
+            Assert.True(result);
+        }
 
         public void Dispose()
         {
