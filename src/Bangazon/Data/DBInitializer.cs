@@ -3,10 +3,14 @@ using Microsoft.Data.Sqlite;
 using BangazonCLI;
 using BangazonCLI.Models;
 
+// Author: Mitchell
+// Seeds data if doesn't already exist in the appropriate tables
+
 namespace BangazonCLI
 {
     public static class DBInitializer
     {
+      // Runs check for a piece of existing data
       public static void Initialize(DatabaseInterface db)
       {
         bool checkForData = false; 
@@ -16,7 +20,7 @@ namespace BangazonCLI
             {
                 checkForData = true; 
             }
-
+      // If no data returns from the simple test, then inserts the following into the created tables
           if(checkForData == false)
           {
             db.SeedData($@"
