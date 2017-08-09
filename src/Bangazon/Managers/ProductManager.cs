@@ -12,6 +12,7 @@ namespace BangazonCLI.Managers
     {
         private List<Product> _products = new List<Product>();
         private DatabaseInterface _db;
+        private int _custProd;
         public ProductManager(DatabaseInterface db)
         {
             _db = db;
@@ -32,10 +33,27 @@ namespace BangazonCLI.Managers
             return newProductId;
         }
 
-        public int GetProduct(int productId)
+        public Product setSingleProduct(int productId)
         {
-            int id = productId;
-            return id;
+           	Product singleProduct= null;
+             _db.Query($"select * from product where product.productId = {productId}",
+             (SqliteDataReader reader) =>{
+                 _products.Clear();
+                while(reader.Read())
+                {
+                  singleProduct =new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString() ,reader.GetInt32(5),reader.GetInt32(6)  ){ProductId= reader.GetInt32(0)};
+                        
+                  
+                }
+ 
+            });
+            return singleProduct;
         }
+        public void editProduct(int productId)
+        {
+            
+        }
+
+
     }
 }

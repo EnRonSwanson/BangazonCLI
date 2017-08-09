@@ -36,10 +36,15 @@ namespace Bangazon.Tests
         
         //Purpose: Test creates new product and product type, then retrieves the same product and asserts that the added Product id is equal to the result id
         [Fact]
-        public void GetProductShould()
+        public void setProductShould()
         {
-            int result = _productManager.GetProduct(1);
-            Assert.True(result != 0);
+            ProductType newProductType = new ProductType("Home Decor");
+            int typeid = _productTypeManager.AddProductType(newProductType);
+            Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
+            int productThatWasCreated = _productManager.CreateProduct(product);
+            int id= 1;
+            var result = _productManager.setSingleProduct(productThatWasCreated);
+            Assert.IsType<Product>(result);
         }
 
         public void Dispose()
