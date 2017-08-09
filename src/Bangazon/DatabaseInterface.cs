@@ -18,11 +18,26 @@ namespace BangazonCLI
         private string _connectionString;
         private SqliteConnection _connection;
 
-        public DatabaseInterface(string database)
+        public DatabaseInterface(string db)
         {
-            string env = $"{Environment.GetEnvironmentVariable(database)}";
+            string env = $"{Environment.GetEnvironmentVariable(db)}";
             _connectionString = $"Data Source={env}";
             _connection = new SqliteConnection(_connectionString);
+        }
+
+        public void SeedData(string command)
+        {
+            using (_connection)
+            {
+                _connection.Open();
+                SqliteCommand dbcmd = _connection.CreateCommand();
+                dbcmd.CommandText = command;
+
+                dbcmd.ExecuteNonQuery();
+
+                dbcmd.Dispose();
+                _connection.Close();
+            }
         }
 
         // reusable Query for passed desired action from any manager file
