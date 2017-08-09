@@ -149,8 +149,6 @@ namespace BangazonCLI
              
                 if (choice == 5)
                 {
-
-
                     Console.WriteLine("*********************");
                     List<Product> productList = productManager.GetListOfProducts();
 
@@ -173,7 +171,7 @@ namespace BangazonCLI
                     Console.Write("> ");
                     string productChoice = Console.ReadLine();
                     int productChoiceNum = Int32.Parse(productChoice);
-                    int? addedProductId = productList[productChoiceNum].ProductId;
+                    int? addedProductId = productList[productChoiceNum-1].ProductId;
 
                     orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
                     Console.WriteLine("Product Successfully Added.");
