@@ -29,13 +29,6 @@ namespace BangazonCLI.Tests
         {
             Assert.IsType<Customer>(_customerModel);
         }
-        [Fact]
-        public void getASingleCustomerToReturnAsActive()
-        {
-            int RyanMcCartyId = _customer.AddCustomer(_customerModel);
-            var ryan = _customer.getSingleCustomer(RyanMcCartyId);
-            Assert.IsType<Customer>(_customerModel);
-        }
 
         [Fact]
         public void GetListOfAllCustomersShould()
