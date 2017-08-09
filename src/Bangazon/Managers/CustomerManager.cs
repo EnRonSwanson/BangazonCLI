@@ -21,7 +21,7 @@ namespace BangazonCLI.Managers
 
         public int AddCustomer(Customer cust)
         {
-            var id= _db.Insert($"Insert into Customer values (null,'{cust.Name}','{cust.AccountCreationDate}','{cust.Street}','{cust.City}', '{cust.State}','{cust.zip}', '{cust.Phone}')");
+            var id= _db.Insert($"Insert into Customer values (null,'{cust.Name}','{cust.AccountCreationDate}','{cust.Street}','{cust.City}', '{cust.State}', {cust.zip}, '{cust.Phone}')");
 
             return id;
         }
