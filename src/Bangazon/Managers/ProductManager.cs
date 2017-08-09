@@ -54,6 +54,23 @@ namespace BangazonCLI.Managers
             
         }
 
+        public List<Product> GetListOfProducts()
+        {
+            _db.Query("select productid, title from product",
+                (SqliteDataReader reader) => {
+                    _products.Clear();
+                    while (reader.Read ())
+                    {
+                        _products.Add(new Product(
+                            reader.GetInt32(0),
+                            reader[1].ToString()
+                        ));
+                    }
+                }
+            );
+
+            return _products;
+        }
 
     }
 }
