@@ -22,15 +22,20 @@ namespace BangazonCLI.Tests
 
         [Fact]
         public void CreateOrderShould()
-        {            
+        {
+            CustomerManager _customerManager = new CustomerManager(_db);
+            ActiveCustomer _activeManager = new ActiveCustomer();
+            var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+            _activeManager.setActiveCustomerId(newCustomerId);
             var newOrderId = _manager.CreateOrder();
             Assert.IsType<int>(newOrderId);
 
         }
         [Fact]
-        public void GetIncompleteOrderForCustomerShould()
+        public void CheckForIncompleteOrderShould()
         {
-            var incompleteOrderId = _manager.GetIncompleteOrderForCustomer();
+            var newOrderId = _manager.CreateOrder();
+            var incompleteOrderId = _manager.CheckForIncompleteOrder();
             Assert.IsType<int?>(incompleteOrderId);
         }
 

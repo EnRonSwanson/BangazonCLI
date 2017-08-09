@@ -22,7 +22,7 @@ namespace BangazonCLI.Managers
         public int CreateOrder()
         {
             //Checks to see if there is already an existing incomplete order
-            int? existingOrder = GetIncompleteOrderForCustomer();
+            int? existingOrder = CheckForIncompleteOrder();
             if(existingOrder != null)
             {
                 return (int)existingOrder;
@@ -30,7 +30,7 @@ namespace BangazonCLI.Managers
             } else
             {
                 //if no incomplete order already exists then make a new one
-                int? customerID = activeManager.getActiveCustomerId();
+                int? customerID = ActiveCustomer.activeCustomerId;
                 Order newOrder = new Order((int)customerID);
                 int newOrderId= _db.Insert($"INSERT INTO [order] (orderId, customerId, paymentTypeId, dateCreated, dateCompleted) VALUES (null, {customerID}, null, {DateTime.Now}, null)");
                 return newOrderId; 
@@ -40,9 +40,9 @@ namespace BangazonCLI.Managers
         //Method Author: Andrew Rock
         //Checks to see if the actie customer already has an incomplete order
         //returns null if no incomplete order, otherwise returns id of incomplete order
-        public int? GetIncompleteOrderForCustomer()
+        public int? CheckForIncompleteOrder()
         {
-            int? customerID = activeManager.getActiveCustomerId();
+            int? customerID = ActiveCustomer.activeCustomerId;
             int? incompleteOrderId = null;
             _db.Query($"SELECT o.orderid FROM [order] WHERE o.paymentTypeId =  null AND o.customerId = {customerID}",
                     (SqliteDataReader reader) => {
@@ -61,8 +61,8 @@ namespace BangazonCLI.Managers
 
         public bool AddPaymentTypeToOrder(int paymentTypeId)
         {
-            int customerID = (int)activeManager.getActiveCustomerId();
-            int orderId = (int)GetIncompleteOrderForCustomer();
+            int customerID = (int)ActiveCustomer.activeCustomerId;
+            int orderId = (int)CheckForIncompleteOrder();
             int confirmedID = _db.Insert($"PUT INTO [order] o (o.orderid, o.customerid, o.paymentTypeID) VALUES ({orderId}, {customerID}, {paymentTypeId})");
             if(orderId == confirmedID)
             {
