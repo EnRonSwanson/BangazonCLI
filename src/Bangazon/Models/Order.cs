@@ -13,6 +13,13 @@ namespace BangazonCLI.Models
         public int? paymentTypeId {get; set;}
         public DateTime dateCreated {get; set;}
         public DateTime? dateCompleted {get; set;}
+        public Order(int customerId)
+        {
+            this.customerId = customerId;
+            this.paymentTypeId = null;
+            this.dateCreated = DateTime.Now;
+            this.dateCompleted = null;
+        }
 
     }
     
