@@ -47,7 +47,6 @@ namespace BangazonCLI.Managers
 
             return _customer;
         }
-        public Customer getSingleCustomer (int id) =>  _customer.SingleOrDefault(guy => guy.CustomerId == id);
         
     }
 }
