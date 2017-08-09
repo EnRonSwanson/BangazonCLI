@@ -49,11 +49,29 @@ namespace BangazonCLI.Managers
             });
             return singleProduct;
         }
-        public void editProduct(int productId)
+        public bool updateProduct(int productId, Product product)
         {
-            
+           _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
+           return true;
         }
 
+        public List<Product> GetListOfProducts()
+        {
+            _db.Query("select productid, title from product",
+                (SqliteDataReader reader) => {
+                    _products.Clear();
+                    while (reader.Read ())
+                    {
+                        _products.Add(new Product(
+                            reader.GetInt32(0),
+                            reader[1].ToString()
+                        ));
+                    }
+                }
+            );
+
+            return _products;
+        }
 
     }
 }
