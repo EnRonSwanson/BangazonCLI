@@ -32,7 +32,7 @@ namespace BangazonCLI.Managers
                 //if no incomplete order already exists then make a new one
                 int? customerID = ActiveCustomer.activeCustomerId;
                 Order newOrder = new Order((int)customerID);
-                int newOrderId= _db.Insert($"INSERT INTO [order] (orderId, customerId, paymentTypeId, dateCreated, dateCompleted) VALUES (null, {customerID}, null, {DateTime.Now}, null)");
+                int newOrderId= _db.Insert($"INSERT INTO [order] VALUES (null, {customerID}, null, '{DateTime.Now}', null)");
                 return newOrderId; 
             }
         }
@@ -44,7 +44,7 @@ namespace BangazonCLI.Managers
         {
             int? customerID = ActiveCustomer.activeCustomerId;
             int? incompleteOrderId = null;
-            _db.Query($"SELECT o.orderid FROM [order] WHERE o.paymentTypeId =  null AND o.customerId = {customerID}",
+            _db.Query($"SELECT o.orderid FROM [order] o WHERE o.customerId = {customerID} AND o.paymentTypeId IS NULL",
                     (SqliteDataReader reader) => {
                     while (reader.Read ())
                     {
@@ -59,21 +59,31 @@ namespace BangazonCLI.Managers
         //Finds the outstanding incomplete order and active customer
         // and then assigns the payment type passed into the method onto the order
 
-        public bool AddPaymentTypeToOrder(int paymentTypeId)
+        // public bool AddPaymentTypeToOrder(int paymentTypeId)
+        // {
+        //     int customerID = (int)ActiveCustomer.activeCustomerId;
+        //     int orderId = (int)CheckForIncompleteOrder();
+        //     string dateCreated = "";
+        //     _db.Query($"SELECT o.datecreated FROM [order] o WHERE o.orderid = {orderId}",
+        //                     (SqliteDataReader reader) => {
+        //                         while (reader.Read ())
+        //                         {
+        //                             dateCreated = reader[0].ToString();
+                        
+        //                         }
+        //                     });
+        //     int confirmedID = _db.Insert($"INSERT INTO [order] VALUES ({orderId}, {customerID}, {paymentTypeId}, '{dateCreated}', '{DateTime.Now}')");
+        //     if(orderId == confirmedID)
+        //     {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
+        public int AddProductToOrder(int addedProductId, int orderId)
         {
-            int customerID = (int)ActiveCustomer.activeCustomerId;
-            int orderId = (int)CheckForIncompleteOrder();
-            int confirmedID = _db.Insert($"INSERT INTO [order] o (o.orderid, o.customerid, o.paymentTypeID) VALUES ({orderId}, {customerID}, {paymentTypeId})");
-            if(orderId == confirmedID)
-            {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        public void AddProductToOrder(Product addedProductId, Order orderId)
-        {
-            _db.Insert($"INSERT INTO orderproduct op VALUES ({orderId}, {addedProductId})");
+            var orderProductId = _db.Insert($"INSERT INTO orderproduct VALUES (null, {orderId}, {addedProductId})");
+            return orderProductId;
         }
         public List<Order> GetAllCompletedOrders()
         {

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace BangazonCLI.Tests
 {
-    public class OrderManagerShould //: IDisposable
+    public class OrderManagerShould : IDisposable
     {
 
         private readonly OrderManager _orderManager;
@@ -17,7 +17,9 @@ namespace BangazonCLI.Tests
         
         public OrderManagerShould()
         {
-            _manager = new OrderManager(_db);
+            _db = new DatabaseInterface("BANGAZON_CLI_DB");
+            _orderManager = new OrderManager(_db);
+    
         }
 
         [Fact]
@@ -25,7 +27,7 @@ namespace BangazonCLI.Tests
         {
             CustomerManager _customerManager = new CustomerManager(_db);
             ActiveCustomer _activeManager = new ActiveCustomer();
-            var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+            var newCustomerId = _customerManager.AddCustomer(new Customer("Ryan McCarty", "3041 Old Field Way", "Lexington", "Ky",40513, "859-588-2850"));
             _activeManager.setActiveCustomerId(newCustomerId);
             var newOrderId = _orderManager.CreateOrder();
             Assert.IsType<int>(newOrderId);
@@ -39,23 +41,38 @@ namespace BangazonCLI.Tests
             var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
             _activeManager.setActiveCustomerId(newCustomerId);
             var incompleteOrderId = _orderManager.CheckForIncompleteOrder();
-            Assert.IsType<int?>(incompleteOrderId);
+            Assert.Null(incompleteOrderId);
         }
 
 
+        // [Fact]
+        // public void AddPaymentTypeToOrderShould()
+        // {
+        //     CustomerManager _customerManager = new CustomerManager(_db);
+        //     ActiveCustomer _activeManager = new ActiveCustomer();
+        //     var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+        //     _activeManager.setActiveCustomerId(newCustomerId);
+        //     var newOrderId = _orderManager.CreateOrder();
+        //     var orderWithPayment = _orderManager.AddPaymentTypeToOrder(newOrderId); //the parameter passed is the id of the payment type
+        //     Assert.False(orderWithPayment);
+            
+        // }
         [Fact]
-        public void AddPaymentTypeToOrderShould()
+        public void AddProductToOrderShould()
         {
-             CustomerManager _customerManager = new CustomerManager(_db);
+            CustomerManager _customerManager = new CustomerManager(_db);
             ActiveCustomer _activeManager = new ActiveCustomer();
+            ProductManager _productManager = new ProductManager(_db);
+            ProductTypeManager _productTypeManager = new ProductTypeManager(_db);
             var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
             _activeManager.setActiveCustomerId(newCustomerId);
-            var newOrderId = _orderManager.CreateOrder();
-            var orderWithPayment = _orderManager.AddPaymentTypeToOrder(newOrderId); //the parameter passed is the id of the payment type
-            Assert.True(orderWithPayment);
+            var newProductTypeId = _productTypeManager.AddProductType(new ProductType("taco"));
+            var newProductId = _productManager.CreateProduct(new Product(newProductTypeId, "taco", 25, "string description", 25, newCustomerId));
+            var orderId = _orderManager.CreateOrder();
+            var orderProductId = _orderManager.AddProductToOrder(newProductId, orderId);
+            Assert.IsType<int>(orderProductId);
             
         }
-
         [Fact]
         public void GetAllCompletedOrdersShould()
         {
@@ -63,10 +80,12 @@ namespace BangazonCLI.Tests
             Assert.IsType<List<Order>>(completedOrders);
         }
 
-        // public void Dispose()
-        // {
-        //     _db.Delete("DELETE FROM product");
-        //     _db.Delete("DELETE FROM order");
-        // }
+        public void Dispose()
+        {
+            _db.Delete("DELETE FROM [order]");
+            _db.Delete("DELETE FROM customer");
+            _db.Delete("DELETE FROM product");
+            _db.Delete("DELETE FROM orderproduct");
+        }
     }
 }
