@@ -64,7 +64,7 @@ namespace BangazonCLI
                     Console.WriteLine ("Enter customer phone number");
                     Console.Write ("> ");
                     string phoneNumber = Console.ReadLine();   
-                    int custId= manager.AddCustomer(new Customer(fullName, street, city, state, Int32.Parse(postalCode), phoneNumber));
+                    int custId = manager.AddCustomer(new Customer(fullName, street, city, state, Int32.Parse(postalCode), phoneNumber));
                 }
                 // Set Active Customer Menu
                 // By Ryan and Mitchell
@@ -83,7 +83,7 @@ namespace BangazonCLI
                     Console.Write("> ");
                     string setThisCustomerAsActive = Console.ReadLine();
                     activeCustomer.setActiveCustomerId(Int32.Parse(setThisCustomerAsActive));
-                    var active= ActiveCustomer.activeCustomerId;
+                    var active = ActiveCustomer.activeCustomerId;
                     // potential getter will go here to convert customer ID to its corresponding name
                     Console.WriteLine("Active customer ID is: " + active);
                 }
@@ -98,7 +98,7 @@ namespace BangazonCLI
                     Console.Write("> ");
                     string accountNum= Console.ReadLine();
                     int customerId = ActiveCustomer.activeCustomerId;
-                    int paymentId= payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
+                    int paymentId = payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
                 }
                 // If option 4 was chosen, create a new product for the logged in user
                 // By Mitchell
@@ -138,38 +138,57 @@ namespace BangazonCLI
                     int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
                     int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                 }
-             
                 // By Andy
                 if (choice == 5)
                 {
                     Console.WriteLine("*********************");
                     List<Product> productList = productManager.GetListOfProducts();
-
                     int? activeOrder = orderManager.CreateOrder();
                     if(activeOrder != null)
                     {
                         Console.WriteLine("This Customer already has an open order.");
                     }
-                    else{
+                    else {
                         Console.WriteLine("Created a new order for the customer");
                     }
                     Console.WriteLine("What product would you like to add?");
                     int counter = 1;
-                    foreach(Product product in productList)
+                    foreach (Product product in productList)
                     {
                         Console.WriteLine($"{counter}. {product.Title}");
                         counter ++;
-                    
                     }
                     Console.Write("> ");
                     string productChoice = Console.ReadLine();
                     int productChoiceNum = Int32.Parse(productChoice);
                     int? addedProductId = productList[productChoiceNum-1].ProductId;
-
                     orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
                     Console.WriteLine("Product Successfully Added.");
                 }
-            }while (choice != 12);
+                // If option 8 was chosen, edit an existing product
+                // By Mitchell
+                if (choice == 8)
+                {
+                    // gets list of product belonging to that customer
+                    var active = ActiveCustomer.activeCustomerId;
+                    List<Product> productList = productManager.getCustomersProducts(active);
+                    for (int i = 0; i < productList.Count; i++ )
+                    {
+                        Console.WriteLine($"{i+1}. {productList[i].Title}");
+                    }
+                    Console.WriteLine("*************************************************");
+                    Console.WriteLine("Select which of your products to edit");
+                    Console.Write("> ");
+                    string productIdToEdit = Console.ReadLine();
+                    // passes selected product id into getter to get product details
+                    productManager.getSingleProduct(Int32.Parse(productIdToEdit));
+                    Console.Write("> ");
+                    // WRITE PRODUCT DETAILS TO CONSOLE
+                    // USER SELECTS WHICH FIELD TO EDIT ??
+                    Product editedProduct = new Product();
+                    productManager.updateProduct(Int32.Parse(productIdToEdit), editedProduct);
+                }
+            } while (choice != 12);
         }
     }
-}   
+}

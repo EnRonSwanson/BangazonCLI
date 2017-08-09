@@ -17,6 +17,7 @@ namespace BangazonCLI.Managers
         {
             _db = db;
         }
+
         public int CreateProduct(Product product)
         {
             // Inserting new product into db
@@ -35,7 +36,7 @@ namespace BangazonCLI.Managers
 
         public List<Product> getCustomersProducts(int sellerId)
         {
-            _db.Query($"select * from product where product.sellerId= {sellerId}",
+            _db.Query($"select * from product where product.sellerId = {sellerId}",
             (SqliteDataReader reader)=>{
                 _products.Clear();
                 while(reader.Read())
@@ -53,7 +54,7 @@ namespace BangazonCLI.Managers
             return _products;
         }
 
-        public Product setSingleProduct(int productId)
+        public Product getSingleProduct(int productId)
         {
            	Product singleProduct= null;
              _db.Query($"select * from product where product.productId = {productId}",
@@ -61,19 +62,18 @@ namespace BangazonCLI.Managers
                  _products.Clear();
                 while(reader.Read())
                 {
-                  singleProduct =new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString() ,reader.GetInt32(5),reader.GetInt32(6)  ){ProductId= reader.GetInt32(0)};
-                        
-                  
+                  singleProduct =new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString() ,reader.GetInt32(5),reader.GetInt32(6)  ){ProductId= reader.GetInt32(0)};  
                 }
- 
             });
             return singleProduct;
         }
+
         public bool updateProduct(int productId, Product product)
         {
            _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
            return true;
         }
+
         public bool deleteProduct(int productId)
         {
             _db.Delete($"DELETE from product  where product.productId={productId}");
@@ -97,6 +97,5 @@ namespace BangazonCLI.Managers
 
             return _products;
         }
-
     }
 }
