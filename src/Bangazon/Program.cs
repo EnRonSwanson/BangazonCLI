@@ -21,6 +21,7 @@ namespace BangazonCLI
             OrderManager orderManager = new OrderManager(db);
             // Seed the database if none exists
             db.RunCheckForTable();
+            DBInitializer.Initialize(db);
             CustomerManager manager = new CustomerManager(db);
 
             // Read in the user's choice
