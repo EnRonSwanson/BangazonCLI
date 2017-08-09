@@ -18,6 +18,7 @@ namespace BangazonCLI
             ActiveCustomer activeCustomer = new ActiveCustomer();
             ProductManager productManager = new ProductManager(db);
             PaymentTypeManager payment= new PaymentTypeManager(db);
+            OrderManager orderManager = new OrderManager(db);
             // Seed the database if none exists
             db.RunCheckForTable();
             CustomerManager manager = new CustomerManager(db);
@@ -35,6 +36,7 @@ namespace BangazonCLI
                 Console.WriteLine ("2. Choose an active customer");
                 Console.WriteLine ("3. Create a payment type");
                 Console.WriteLine ("4. Add product to sell");
+                Console.WriteLine ("5. Add Product to Shopping Cart");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -144,7 +146,37 @@ namespace BangazonCLI
                     int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
                     int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                 }
-            } while (choice != 12);
+             
+                if (choice == 5)
+                {
+                    Console.WriteLine("*********************");
+                    List<Product> productList = productManager.GetListOfProducts();
+
+                    int? activeOrder = orderManager.CreateOrder();
+                    if(activeOrder != null)
+                    {
+                        Console.WriteLine("This Customer already has an open order.");
+                    }
+                    else{
+                        Console.WriteLine("Created a new order for the customer");
+                    }
+                    Console.WriteLine("What product would you like to add?");
+                    int counter = 1;
+                    foreach(Product product in productList)
+                    {
+                        Console.WriteLine($"{counter}. {product.Title}");
+                        counter ++;
+                    
+                    }
+                    Console.Write("> ");
+                    string productChoice = Console.ReadLine();
+                    int productChoiceNum = Int32.Parse(productChoice);
+                    int? addedProductId = productList[productChoiceNum-1].ProductId;
+
+                    orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
+                    Console.WriteLine("Product Successfully Added.");
+                }
+            }while (choice != 12);
         }
     }
 }   

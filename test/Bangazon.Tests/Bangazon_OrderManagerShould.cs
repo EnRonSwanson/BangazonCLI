@@ -86,6 +86,7 @@ namespace BangazonCLI.Tests
             _db.Delete("DELETE FROM customer");
             _db.Delete("DELETE FROM product");
             _db.Delete("DELETE FROM orderproduct");
+            _db.Delete("DELETE FROM producttype");
         }
     }
 }
