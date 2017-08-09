@@ -18,8 +18,8 @@ namespace BangazonCLI
             ActiveCustomer activeCustomer = new ActiveCustomer();
             ProductManager productManager = new ProductManager(db);
             PaymentTypeManager payment= new PaymentTypeManager(db);
-            OrderManager orderManager = new OrderManager(db);
-            // Seed the database if none exists
+            OrderManager orderManager = new OrderManager(db);               // builds fine with this, but need to ask Andy
+            // Seeds the database if none exists
             db.RunCheckForTable();
             DBInitializer.Initialize(db);
             CustomerManager manager = new CustomerManager(db);
@@ -28,7 +28,6 @@ namespace BangazonCLI
             int choice;
 
             do {
-
                 // Present the main menu
                 Console.WriteLine ("*************************************************");
                 Console.WriteLine ("Welcome to Bangazon! Command Line Ordering System");
@@ -42,8 +41,9 @@ namespace BangazonCLI
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
 
+                // Add New Customer
                 // If option 1 was chosen, create a new customer account
-                // Written by Ryan
+                // By Ryan
                 if (choice == 1)
                 {
                     Console.WriteLine ("Enter customer full name");
@@ -67,8 +67,8 @@ namespace BangazonCLI
                     int custId= manager.AddCustomer(new Customer(fullName, street, city, state, Int32.Parse(postalCode), phoneNumber));
                 }
                 // Set Active Customer Menu
-                // Written by Ryan, Andy, and Mitchell
-                // Gets a list of customers and displays them
+                // By Ryan and Mitchell
+                // If option 2 chosen, gets and displays list of customers - user chooses which to set as active
                 if(choice == 2)
                 {
                     CustomerManager _manager = new CustomerManager(db);
@@ -84,10 +84,12 @@ namespace BangazonCLI
                     string setThisCustomerAsActive = Console.ReadLine();
                     activeCustomer.setActiveCustomerId(Int32.Parse(setThisCustomerAsActive));
                     var active= ActiveCustomer.activeCustomerId;
-                    // potential getter to convert customer ID to its corresponding name
+                    // potential getter will go here to convert customer ID to its corresponding name
                     Console.WriteLine("Active customer ID is: " + active);
                 }
-                if (choice ==3)
+                // If option 3 was chosen, enter payment type for active customer
+                // By Ryan
+                if (choice == 3)
                 {
                     Console.WriteLine("Enter a payment type (visa, mastercard, etc)");
                     Console.Write("> ");
@@ -97,26 +99,15 @@ namespace BangazonCLI
                     string accountNum= Console.ReadLine();
                     int customerId = ActiveCustomer.activeCustomerId;
                     int paymentId= payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
-
                 }
-
-
                 // If option 4 was chosen, create a new product for the logged in user
-                // Written by Mitchell
+                // By Mitchell
                 if (choice == 4)
                 {   
                     // product id is auto generated
                     Console.WriteLine ("Enter product title");
                     Console.Write ("> ");
                     string Title = Console.ReadLine();
-                    // maybe eventually the user will choose product type from list of product types, or add new
-                    
-                // manually add product type
-                    Console.WriteLine ("Enter product type");
-                    Console.Write ("> ");
-                    // string Type = "1";                                     // this might need to be user selection from product types
-                    
-                // choose from list of existing product types
                     ProductTypeManager _manager = new ProductTypeManager(db);
                     Console.WriteLine("*************************************************");
                     List<ProductType> allProductTypes = _manager.GetListProductTypes();
@@ -148,6 +139,7 @@ namespace BangazonCLI
                     int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                 }
              
+                // By Andy
                 if (choice == 5)
                 {
                     Console.WriteLine("*********************");
