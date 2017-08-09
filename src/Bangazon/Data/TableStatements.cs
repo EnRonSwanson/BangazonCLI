@@ -17,7 +17,7 @@ namespace BangazonCLI
                             `city` varchar(80) not null,
                             `state` varchar(2) not null,
                             `postalcode` int(5) not null,
-                            `phone` int(10) not null
+                            `phone` varchar(12) not null
                         )";
         public string productTypeTable = $@"create table producttype (
                             `producttypeid` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
