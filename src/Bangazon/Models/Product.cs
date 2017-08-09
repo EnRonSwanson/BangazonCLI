@@ -33,8 +33,10 @@ namespace BangazonCLI.Models
             SellerId = customerId;
         }
 
-        public Product()
+        public Product(int productId, string title)
         {
+            ProductId = productId;
+            Title = title;
         }
   }
 
