@@ -33,6 +33,13 @@ namespace Bangazon.Tests
             int productThatWasCreated = _productManager.CreateProduct(product);
             Assert.IsType<int>(productThatWasCreated);
         }
+        [Fact]
+        public void getAllOfACustomersProducts()
+        {
+            int id= 1;
+            var result = _productManager.getCustomersProducts(id);
+            Assert.IsType<List<Product>>(result);
+        }
         
         //Purpose: Test creates new product and product type, then retrieves the same product and asserts that the added Product id is equal to the result id
         [Fact]
