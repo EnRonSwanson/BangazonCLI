@@ -1,9 +1,11 @@
- using System;
+using System;
 using System.Collections.Generic;
 using BangazonCLI.Models;
 using BangazonCLI.Managers;
 using BangazonCLI;
 using Xunit;
+
+// Authors: Mitchell & Ryan
 
 namespace Bangazon.Tests
 {
@@ -20,11 +22,18 @@ namespace Bangazon.Tests
 
         //Purpose: Test is creating a new product type and asserting the returned product type id is not null)
         [Fact]
-        public void AddProductTypeShould()
+        public void AddProductType()
         {
-            ProductType newProductType = new ProductType( "Home Decor");
-            int typeid = _productTypeManager.AddProductType(newProductType);
+            ProductType newProductTypeToTest = new ProductType("Appliance");
+            int typeid = _productTypeManager.AddProductType(newProductTypeToTest);
             Assert.True(typeid != 0); 
+        }
+
+        [Fact]
+        public void GetListProductTypes()
+        {
+            var result = _productTypeManager.GetListProductTypes();
+            Assert.IsType<List<ProductType>>(result);
         }
 
         public void Dispose()

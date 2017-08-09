@@ -107,9 +107,31 @@ namespace BangazonCLI
                     Console.Write ("> ");
                     string Title = Console.ReadLine();
                     // maybe eventually the user will choose product type from list of product types, or add new
+                    
+                // manually add product type
                     Console.WriteLine ("Enter product type");
                     Console.Write ("> ");
-                    string Type = "1";                                     // this might need to be user selection from product types
+                    // string Type = "1";                                     // this might need to be user selection from product types
+                    
+                // choose from list of existing product types
+                    ProductTypeManager _manager = new ProductTypeManager(db);
+                    Console.WriteLine("*************************************************");
+                    List<ProductType> allProductTypes = _manager.GetListProductTypes();
+                    for (int i = 0; i < allProductTypes.Count; i++ )
+                    {
+                        Console.WriteLine($"{i+1}. {allProductTypes[i].Type}");
+                    }
+                    Console.WriteLine("*************************************************");
+                    Console.WriteLine("Select an existing product type by number OR enter a new type");
+                    Console.Write("> ");
+                    int TypeId = 0;
+                    string enteredProductType = Console.ReadLine();
+                    if (Int32.TryParse(enteredProductType, out TypeId)) {
+                    } else {
+                        ProductType newProductType = new ProductType(enteredProductType);
+                        TypeId = _manager.AddProductType(newProductType);
+                    }
+                    var active= ActiveCustomer.activeCustomerId;
                     Console.WriteLine ("Enter product description");
                     Console.Write ("> ");
                     string Description = Console.ReadLine();
@@ -120,7 +142,7 @@ namespace BangazonCLI
                     Console.Write ("> ");
                     string QuantityAvailable = Console.ReadLine();
                     int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
-                    int newProductId = productManager.CreateProduct(new Product(Int32.Parse(Type), Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
+                    int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                 }
             } while (choice != 12);
         }
