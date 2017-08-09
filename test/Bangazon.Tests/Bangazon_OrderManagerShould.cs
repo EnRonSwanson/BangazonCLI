@@ -12,7 +12,7 @@ namespace BangazonCLI.Tests
     public class OrderManagerShould //: IDisposable
     {
 
-        private readonly OrderManager _manager;
+        private readonly OrderManager _orderManager;
         private readonly DatabaseInterface _db;
         
         public OrderManagerShould()
@@ -27,15 +27,18 @@ namespace BangazonCLI.Tests
             ActiveCustomer _activeManager = new ActiveCustomer();
             var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
             _activeManager.setActiveCustomerId(newCustomerId);
-            var newOrderId = _manager.CreateOrder();
+            var newOrderId = _orderManager.CreateOrder();
             Assert.IsType<int>(newOrderId);
 
         }
         [Fact]
         public void CheckForIncompleteOrderShould()
         {
-            var newOrderId = _manager.CreateOrder();
-            var incompleteOrderId = _manager.CheckForIncompleteOrder();
+            CustomerManager _customerManager = new CustomerManager(_db);
+            ActiveCustomer _activeManager = new ActiveCustomer();
+            var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+            _activeManager.setActiveCustomerId(newCustomerId);
+            var incompleteOrderId = _orderManager.CheckForIncompleteOrder();
             Assert.IsType<int?>(incompleteOrderId);
         }
 
@@ -43,7 +46,12 @@ namespace BangazonCLI.Tests
         [Fact]
         public void AddPaymentTypeToOrderShould()
         {
-            var orderWithPayment = _manager.AddPaymentTypeToOrder(1); //the parameter passed is the id of the payment type
+             CustomerManager _customerManager = new CustomerManager(_db);
+            ActiveCustomer _activeManager = new ActiveCustomer();
+            var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+            _activeManager.setActiveCustomerId(newCustomerId);
+            var newOrderId = _orderManager.CreateOrder();
+            var orderWithPayment = _orderManager.AddPaymentTypeToOrder(newOrderId); //the parameter passed is the id of the payment type
             Assert.True(orderWithPayment);
             
         }
@@ -51,7 +59,7 @@ namespace BangazonCLI.Tests
         [Fact]
         public void GetAllCompletedOrdersShould()
         {
-            var completedOrders = _manager.GetAllCompletedOrders();
+            var completedOrders = _orderManager.GetAllCompletedOrders();
             Assert.IsType<List<Order>>(completedOrders);
         }
 

@@ -63,13 +63,17 @@ namespace BangazonCLI.Managers
         {
             int customerID = (int)ActiveCustomer.activeCustomerId;
             int orderId = (int)CheckForIncompleteOrder();
-            int confirmedID = _db.Insert($"PUT INTO [order] o (o.orderid, o.customerid, o.paymentTypeID) VALUES ({orderId}, {customerID}, {paymentTypeId})");
+            int confirmedID = _db.Insert($"INSERT INTO [order] o (o.orderid, o.customerid, o.paymentTypeID) VALUES ({orderId}, {customerID}, {paymentTypeId})");
             if(orderId == confirmedID)
             {
                 return true;
             } else {
                 return false;
             }
+        }
+        public void AddProductToOrder(Product addedProductId, Order orderId)
+        {
+            _db.Insert($"INSERT INTO orderproduct op VALUES ({orderId}, {addedProductId})");
         }
         public List<Order> GetAllCompletedOrders()
         {
