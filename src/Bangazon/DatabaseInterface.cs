@@ -138,7 +138,19 @@ namespace BangazonCLI
             }
         }
 
-        // If Toy method is below, it is ONLY FOR TESTING to see if Db file gets written before Andy completes the variable to get passed into the above method
+        public void Update(string command)
+        {
+            using (_connection)
+            {
+                _connection.Open ();
+                SqliteCommand dbcmd = _connection.CreateCommand ();
+                dbcmd.CommandText = command;
+                
+                dbcmd.ExecuteNonQuery ();
+                dbcmd.Dispose ();
+                _connection.Close ();
+            }
+        }
 
     }
 }

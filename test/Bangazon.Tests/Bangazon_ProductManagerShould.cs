@@ -42,9 +42,20 @@ namespace Bangazon.Tests
             int typeid = _productTypeManager.AddProductType(newProductType);
             Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
             int productThatWasCreated = _productManager.CreateProduct(product);
-            int id= 1;
             var result = _productManager.setSingleProduct(productThatWasCreated);
             Assert.IsType<Product>(result);
+        }
+        [Fact]
+        public void updateACustomersProduct()
+        {
+            ProductType newProductType = new ProductType("Home Decor");
+            int typeid = _productTypeManager.AddProductType(newProductType);
+            Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
+            int productThatWasCreated = _productManager.CreateProduct(product);
+            product.Description= "Cool rug";
+            var result= _productManager.updateProduct(productThatWasCreated, product);
+            Assert.True(result);
+
         }
 
         public void Dispose()

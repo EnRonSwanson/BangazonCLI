@@ -49,9 +49,10 @@ namespace BangazonCLI.Managers
             });
             return singleProduct;
         }
-        public void editProduct(int productId)
+        public bool updateProduct(int productId, Product product)
         {
-            
+           _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
+           return true;
         }
 
 
