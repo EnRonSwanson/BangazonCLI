@@ -38,6 +38,7 @@ namespace BangazonCLI
                 Console.WriteLine ("4. Add product to sell");
                 Console.WriteLine ("5. Add Product to Shopping Cart");
                 Console.WriteLine ("6. Complete an order");
+                Console.WriteLine ("7. Remove customer product");
                 Console.WriteLine ("8. Update product information");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
@@ -262,8 +263,36 @@ namespace BangazonCLI
                         }
                         else {
                         }
+                    }
+                        //By: Ryan McCarty
+                        //Menu option for DELETE
+                        if(choice ==7)
+                        {
+                            Console.WriteLine("*************************************************");
+                            Console.WriteLine("Choose a product to delete");
+                            int customerId = ActiveCustomer.activeCustomerId;
+                            List<Product> activeCustProducts= productManager.getActiveCustomersNonOrderProdcuts(customerId);
+                            foreach(var x in activeCustProducts)
+                            {
+                                Console.WriteLine($"{x.ProductId}. {x.Title} ");
+                            }
+                            Console.Write(">");
+                            string prodChoice= Console.ReadLine();
+                            Console.WriteLine(prodChoice);
+                            int delProd= Int32.Parse(prodChoice);
+                            bool result= productManager.deleteProduct(delProd);
+                            if(result ==true)
+                            {
+                                Console.WriteLine("Product was deleted");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Deletion failed");
+                            }
+                            
+                        }
 
-                }
+                
     
             } while (choice != 12);
         }
