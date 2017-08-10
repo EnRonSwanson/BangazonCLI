@@ -118,5 +118,24 @@ namespace BangazonCLI.Managers
 
             return _products;
         }
+
+        public List<Product> getAllStaleProducts()
+        {
+            _db.Query("select p.productId, p.title, p.datecreated 'Product Created', p.quantityavailable from Product p where p.productid NOT IN (select productid from OrderProduct) and p.datecreated < date('now', '-180 day') union select product.productid, product.title, product.datecreated 'Product Created', product.quantityavailable from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where [order].datecreated < date('now', '-90 day') and [order].paymenttypeID is null union select product.productid, product.title, product.datecreated 'Product Created', product.quantityavailable from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where product.datecreated < date('now', '-180 day') and [order].paymenttypeID is not null and product.quantityavailable !=0",
+                (SqliteDataReader reader) => {
+                    _products.Clear();
+                    while (reader.Read ())
+                    {
+                        _products.Add(new Product(
+                            reader.GetInt32(0),
+                            reader[1].ToString()
+                        ));
+                    }
+                }
+            );
+
+            return _products;
+        }
+
     }
 }
