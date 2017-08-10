@@ -39,6 +39,7 @@ namespace BangazonCLI
                 Console.WriteLine ("5. Add Product to Shopping Cart");
                 Console.WriteLine ("6. Complete an order");
                 Console.WriteLine ("8. Update product information");
+                Console.WriteLine ("9. Get Revenue Report for customer");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -230,6 +231,12 @@ namespace BangazonCLI
                         productManager.updateProduct(Int32.Parse(productIdToEdit), columnToEdit, newValue);
                     }
 
+                    if(choice == 9)
+                    {
+                        orderManager.GetRevenueReport();
+                    }
+
+
                     if (choice == 6)
                     {
                         int? orderId = orderManager.CheckForIncompleteOrder();
@@ -265,6 +272,7 @@ namespace BangazonCLI
 
                 }
     
+
             } while (choice != 12);
         }
     }
