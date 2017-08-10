@@ -94,6 +94,9 @@ namespace BangazonCLI.Managers
 
         public void GetRevenueReport()
         {
+            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Console.WriteLine("Revenue Report");
+            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!");
             int currentActiveCust = ActiveCustomer.activeCustomerId;
             List<int> completeOrderIds = new List<int>();
             List<(string, int, float)> reportFields = new List<(string, int, float)>();
