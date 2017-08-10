@@ -95,6 +95,7 @@ namespace BangazonCLI.Managers
                             });
             return total;            
         }
+        
         public List<Order> GetAllCompletedOrders()
         {
             return new List<Order>();
