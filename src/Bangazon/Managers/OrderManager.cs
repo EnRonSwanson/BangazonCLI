@@ -121,7 +121,7 @@ namespace BangazonCLI.Managers
                     });
                 foreach(var product in reportFields)
                 {
-                    Console.WriteLine("{0,-20} {1,5} ${3,5:N2}", product.Item1, product.Item2, product.Item3*product.Item2);
+                    Console.WriteLine($"{product.Item1} {product.Item2} ${product.Item3*product.Item2}");
                 }
                 Console.WriteLine("");
 
