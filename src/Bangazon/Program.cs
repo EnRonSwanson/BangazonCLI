@@ -18,7 +18,7 @@ namespace BangazonCLI
             ActiveCustomer activeCustomer = new ActiveCustomer();
             ProductManager productManager = new ProductManager(db);
             PaymentTypeManager payment= new PaymentTypeManager(db);
-            OrderManager orderManager = new OrderManager(db);               // builds fine with this, but need to ask Andy
+            OrderManager orderManager = new OrderManager(db);
             // Seeds the database if none exists
             db.RunCheckForTable();
             DBInitializer.Initialize(db);
@@ -139,7 +139,26 @@ namespace BangazonCLI
                         int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
                         int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                     }
-                // By Andy
+
+                //     var active= ActiveCustomer.activeCustomerId;
+                //     Console.WriteLine ("Enter product description");
+                //     Console.Write ("> ");
+                //     string Description = Console.ReadLine();
+                //     Console.WriteLine ("Enter price");
+                //     Console.Write ("> ");
+                //     string Price = Console.ReadLine();
+                //     Console.WriteLine ("Enter quantity available");
+                //     Console.Write ("> ");
+                //     string QuantityAvailable = Console.ReadLine();
+                //     int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
+                //     int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
+                // }
+
+                //Adding a product to an order
+                //Written by Andrew Rock
+                //Checks if a customer already has an open order (if not it creates a new order)
+                //Then displays a list of products to add to the open order
+
                 if (choice == 5)
                     {
                         Console.WriteLine("*********************");

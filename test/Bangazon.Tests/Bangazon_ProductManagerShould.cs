@@ -84,6 +84,16 @@ namespace Bangazon.Tests
             var result= _productManager.deleteProduct(productThatWasCreated);
             Assert.True(result);
         }
+        [Fact]
+        public void getActiveCustomersNonOrderProductsToThenSelectToDeleteFromTheSystem()
+        {
+            Product product1 = new Product(1, "Blue Rug", 5, "Awesome blue rug", 130.05f, 1);
+            Product product2 = new Product(1, "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
+            int product1ThatWasCreated = _productManager.CreateProduct(product1);
+            int product2ThatWasCreated = _productManager.CreateProduct(product2);
+            List<Product> listofProducts = _productManager.getActiveCustomersNonOrderProdcuts(product1ThatWasCreated);
+            Assert.IsType<List<Product>>(listofProducts);
+        }
 
         public void Dispose()
         {
