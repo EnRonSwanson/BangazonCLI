@@ -59,27 +59,27 @@ namespace BangazonCLI.Managers
         //Finds the outstanding incomplete order and active customer
         // and then assigns the payment type passed into the method onto the order
 
-        // public bool AddPaymentTypeToOrder(int paymentTypeId)
-        // {
-        //     int customerID = (int)ActiveCustomer.activeCustomerId;
-        //     int orderId = (int)CheckForIncompleteOrder();
-        //     string dateCreated = "";
-        //     _db.Query($"SELECT o.datecreated FROM [order] o WHERE o.orderid = {orderId}",
-        //                     (SqliteDataReader reader) => {
-        //                         while (reader.Read ())
-        //                         {
-        //                             dateCreated = reader[0].ToString();
+        public bool AddPaymentTypeToOrder(int paymentTypeId)
+        {
+            int customerID = (int)ActiveCustomer.activeCustomerId;
+            int orderId = (int)CheckForIncompleteOrder();
+            string dateCreated = "";
+            _db.Query($"SELECT o.datecreated FROM [order] o WHERE o.orderid = {orderId}",
+                            (SqliteDataReader reader) => {
+                                while (reader.Read ())
+                                {
+                                    dateCreated = reader[0].ToString();
                         
-        //                         }
-        //                     });
-        //     int confirmedID = _db.Insert($"INSERT INTO [order] VALUES ({orderId}, {customerID}, {paymentTypeId}, '{dateCreated}', '{DateTime.Now}')");
-        //     if(orderId == confirmedID)
-        //     {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // }
+                                }
+                            });
+            int confirmedID = _db.Insert($"UPDATE [order] SET paymenttypeid = {paymentTypeId}, DateCompleted = '{DateTime.Now}' WHERE orderid = {orderId}");
+            if(orderId == confirmedID)
+            {
+                return true;
+            } else {
+                return false;
+            }
+        }
         public int AddProductToOrder(int addedProductId, int orderId)
         {
             var orderProductId = _db.Insert($"INSERT INTO orderproduct VALUES (null, {orderId}, {addedProductId})");
