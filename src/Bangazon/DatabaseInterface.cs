@@ -123,7 +123,7 @@ namespace BangazonCLI
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
                 // Query if the passed table has been created
-                dbcmd.CommandText = $"select id from {tableName}";                     // does table "tableName" exist?
+                dbcmd.CommandText = $"select id from {tableName}";
 
                 try
                 {

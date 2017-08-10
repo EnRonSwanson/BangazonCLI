@@ -52,7 +52,6 @@ namespace BangazonCLI.Managers
                         reader.GetInt32(4),
                         reader[5].ToString(),
                         reader.GetFloat(6),
-                        // DateTime.ParseExact(reader[7].ToString(), "MM/dd/yy hh:mm:ss tt", null)
                         DateTime.Parse(reader[7].ToString())
                     ));
                 }
@@ -72,12 +71,6 @@ namespace BangazonCLI.Managers
             });
             return singleProduct;
         }
-
-        // public bool updateProduct(int productId, Product product)
-        // {
-        //    _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
-        //    return true;
-        // }
 
         public bool updateProduct(int productId, string columnToEdit, string newValue)
         {
