@@ -12,11 +12,12 @@ namespace BangazonCLI.Managers
     {
         private List<Product> _products = new List<Product>();
         private DatabaseInterface _db;
-        private int _custProd;
+        // private int _custProd;
         public ProductManager(DatabaseInterface db)
         {
             _db = db;
         }
+
         public int CreateProduct(Product product)
         {
             // Inserting new product into db
@@ -35,25 +36,29 @@ namespace BangazonCLI.Managers
 
         public List<Product> getCustomersProducts(int sellerId)
         {
-            _db.Query($"select * from product where product.sellerId= {sellerId}",
-            (SqliteDataReader reader)=>{
+            _db.Query($"select * from product where product.sellerId = {sellerId}",
+            (SqliteDataReader reader) => {
                 _products.Clear();
                 while(reader.Read())
                 {
+
+                    Console.WriteLine($"\n\n{reader[7].ToString()}\n\n");
+
                     _products.Add(new Product(
+                        reader.GetInt32(0),
                         reader.GetInt32(1),
-                        reader[2].ToString(),
-                        reader.GetInt32(3),
-                        reader[4].ToString(),
-                        reader.GetInt32(5),
-                        reader.GetInt32(6)));
-                    
+                        reader.GetInt32(2),
+                        reader[3].ToString(),
+                        reader.GetInt32(4),
+                        reader[5].ToString(),
+                        reader.GetFloat(6),
+                        DateTime.Parse(reader[7].ToString())
+                    ));
                 }
             });
             return _products;
         }
-
-        public Product setSingleProduct(int productId)
+        public Product getSingleProduct(int productId)
         {
            	Product singleProduct= null;
              _db.Query($"select * from product where product.productId = {productId}",
@@ -61,22 +66,21 @@ namespace BangazonCLI.Managers
                  _products.Clear();
                 while(reader.Read())
                 {
-                  singleProduct =new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString() ,reader.GetInt32(5),reader.GetInt32(6)  ){ProductId= reader.GetInt32(0)};
-                        
-                  
+                  singleProduct = new Product(reader.GetInt32(1),reader[3].ToString(),reader.GetInt32(4),reader[5].ToString(),reader.GetFloat(6),reader.GetInt32(2)){ProductId= reader.GetInt32(0)};   
                 }
- 
             });
             return singleProduct;
         }
-        public bool updateProduct(int productId, Product product)
+
+        public bool updateProduct(int productId, string columnToEdit, string newValue)
         {
-           _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
+           _db.Update($"update product set {columnToEdit}='{newValue}' where productId= {productId}");
            return true;
         }
+
         public bool deleteProduct(int productId)
         {
-            _db.Delete($"DELETE from product  where product.productId={productId}");
+            _db.Delete($"DELETE from product where product.productId={productId}");
             return true;
         }
         public List<Product> getActiveCustomersNonOrderProdcuts(int activeCustomer)
@@ -114,6 +118,7 @@ namespace BangazonCLI.Managers
 
             return _products;
         }
+
         public List<Product> getAllStaleProducts()
         {
             _db.Query("select p.productId, p.title, p.datecreated 'Product Created', p.quantityavailable from Product p where p.productid NOT IN (select productid from OrderProduct) and p.datecreated < date('now', '-180 day') union select product.productid, product.title, product.datecreated 'Product Created', product.quantityavailable from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where [order].datecreated < date('now', '-90 day') and [order].paymenttypeID is null union select product.productid, product.title, product.datecreated 'Product Created', product.quantityavailable from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where product.datecreated < date('now', '-180 day') and [order].paymenttypeID is not null and product.quantityavailable !=0",

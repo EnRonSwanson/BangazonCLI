@@ -43,26 +43,23 @@ namespace Bangazon.Tests
         
         //Purpose: Test creates new product and product type, then retrieves the same product and asserts that the added Product id is equal to the result id
         [Fact]
-        public void setProductShould()
+        public void getProductShould()
         {
             ProductType newProductType = new ProductType("Home Decor");
             int typeid = _productTypeManager.AddProductType(newProductType);
             Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
             int productThatWasCreated = _productManager.CreateProduct(product);
-            var result = _productManager.setSingleProduct(productThatWasCreated);
+            var result = _productManager.getSingleProduct(productThatWasCreated);
             Assert.IsType<Product>(result);
         }
         [Fact]
         public void updateACustomersProduct()
         {
-            ProductType newProductType = new ProductType("Home Decor");
-            int typeid = _productTypeManager.AddProductType(newProductType);
-            Product product = new Product(typeid , "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
-            int productThatWasCreated = _productManager.CreateProduct(product);
-            product.Description= "Cool rug";
-            var result= _productManager.updateProduct(productThatWasCreated, product);
+            int productId = 1;
+            string columnToEdit = "Title";
+            string newValue = "TitleOfProductTest";
+            var result= _productManager.updateProduct(productId, columnToEdit, newValue);
             Assert.True(result);
-
         }
 
         //Author: Madeline
@@ -76,6 +73,7 @@ namespace Bangazon.Tests
             List<Product> listofProducts = _productManager.GetListOfProducts();
             Assert.IsType<List<Product>>(listofProducts);
         }
+        
         [Fact]
         public void deleteAProductFromTheSystem()
         {
