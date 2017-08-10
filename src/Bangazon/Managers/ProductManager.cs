@@ -90,8 +90,6 @@ namespace BangazonCLI.Managers
                     _products.Clear();
                     while (reader.Read ())
                     {
-                        Console.WriteLine(reader.GetInt32(0));
-                        Console.WriteLine(reader[1].ToString());
                         _products.Add(new Product(
                             reader.GetInt32(3),
                             reader[1].ToString()
