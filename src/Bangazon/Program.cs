@@ -292,7 +292,6 @@ namespace BangazonCLI
                         Console.WriteLine("Here is the list of all stale products: ");
                         List<Product> staleProducts = productManager.getAllStaleProducts();
                         int counter = 0;
-                        Console.WriteLine(staleProducts);
                         foreach(Product staleProduct in staleProducts)
                         {
                             Console.WriteLine($"{counter+1}. {staleProduct.Title}");
