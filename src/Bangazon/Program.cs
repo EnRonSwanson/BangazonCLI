@@ -189,6 +189,7 @@ namespace BangazonCLI
                         Console.WriteLine ($"2. Description: {productToEdit.Description}");
                         Console.WriteLine ($"3. Price: {productToEdit.Price}");
                         Console.WriteLine ($"4. Quantity Available: {productToEdit.QuantityAvailable}");
+                        Console.Write ("> ");
                         int fieldToEdit;
                         Int32.TryParse (Console.ReadLine(), out fieldToEdit);
                         string columnToEdit = "";
@@ -198,21 +199,25 @@ namespace BangazonCLI
                             case 1:
                                 columnToEdit = "Title";
                                 Console.WriteLine ($"Enter new product title");
+                                Console.Write ("> ");
                                 newValue = Console.ReadLine();
                                 break;
                             case 2:
                                 columnToEdit = "Description";
                                 Console.WriteLine ($"Enter new product description");
+                                Console.Write ("> ");
                                 newValue = Console.ReadLine();
                                 break;
                             case 3:
                                 columnToEdit = "Price";
                                 Console.WriteLine ($"Enter new product price");
+                                Console.Write ("> ");
                                 newValue = Console.ReadLine();
                                 break;
                             case 4:
                                 columnToEdit = "QuantityAvailable";
                                 Console.WriteLine ($"Enter new product QuantityAvailable");
+                                Console.Write ("> ");
                                 newValue= Console.ReadLine();
                                 break;
                         }
