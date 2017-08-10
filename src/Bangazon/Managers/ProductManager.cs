@@ -37,23 +37,24 @@ namespace BangazonCLI.Managers
         public List<Product> getCustomersProducts(int sellerId)
         {
             _db.Query($"select * from product where product.sellerId = {sellerId}",
-            (SqliteDataReader reader)=>{
+            (SqliteDataReader reader) => {
                 _products.Clear();
                 while(reader.Read())
                 {
                     _products.Add(new Product(
+                        reader.GetInt32(0),
                         reader.GetInt32(1),
-                        reader[2].ToString(),
-                        reader.GetInt32(3),
-                        reader[4].ToString(),
-                        reader.GetInt32(5),
-                        reader.GetInt32(6)));
-                    
+                        reader.GetInt32(2),
+                        reader[3].ToString(),
+                        reader.GetInt32(4),
+                        reader[5].ToString(),
+                        reader.GetFloat(6),
+                        reader.GetDateTime(7)
+                    ));
                 }
             });
             return _products;
         }
-
         public Product getSingleProduct(int productId)
         {
            	Product singleProduct= null;
@@ -62,7 +63,7 @@ namespace BangazonCLI.Managers
                  _products.Clear();
                 while(reader.Read())
                 {
-                  singleProduct =new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString() ,reader.GetInt32(5),reader.GetInt32(6)  ){ProductId= reader.GetInt32(0)};  
+                  singleProduct = new Product(reader.GetInt32(1),reader[2].ToString(),reader.GetInt32(3),reader[4].ToString(),reader.GetFloat(5),reader.GetInt32(6)){ProductId= reader.GetInt32(0)};   
                 }
             });
             return singleProduct;

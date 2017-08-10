@@ -37,6 +37,7 @@ namespace BangazonCLI
                 Console.WriteLine ("3. Create a payment type");
                 Console.WriteLine ("4. Add product to sell");
                 Console.WriteLine ("5. Add Product to Shopping Cart");
+                Console.WriteLine ("8. Update product information");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -45,149 +46,172 @@ namespace BangazonCLI
                 // If option 1 was chosen, create a new customer account
                 // By Ryan
                 if (choice == 1)
-                {
-                    Console.WriteLine ("Enter customer full name");
-                    Console.Write ("> ");
-                    string fullName = Console.ReadLine();
-                    Console.WriteLine ("Enter customer city");
-                    Console.Write ("> ");
-                    string city = Console.ReadLine();
-                    Console.WriteLine ("Enter customer state");
-                    Console.Write ("> ");
-                    string state = Console.ReadLine();
-                    Console.WriteLine ("Enter customer street address");
-                    Console.Write ("> ");
-                    string street = Console.ReadLine();
-                    Console.WriteLine ("Enter customer postal code");
-                    Console.Write ("> ");
-                    string postalCode = Console.ReadLine();
-                    Console.WriteLine ("Enter customer phone number");
-                    Console.Write ("> ");
-                    string phoneNumber = Console.ReadLine();   
-                    int custId = manager.AddCustomer(new Customer(fullName, street, city, state, Int32.Parse(postalCode), phoneNumber));
-                }
+                    {
+                        Console.WriteLine ("Enter customer full name");
+                        Console.Write ("> ");
+                        string fullName = Console.ReadLine();
+                        Console.WriteLine ("Enter customer city");
+                        Console.Write ("> ");
+                        string city = Console.ReadLine();
+                        Console.WriteLine ("Enter customer state");
+                        Console.Write ("> ");
+                        string state = Console.ReadLine();
+                        Console.WriteLine ("Enter customer street address");
+                        Console.Write ("> ");
+                        string street = Console.ReadLine();
+                        Console.WriteLine ("Enter customer postal code");
+                        Console.Write ("> ");
+                        string postalCode = Console.ReadLine();
+                        Console.WriteLine ("Enter customer phone number");
+                        Console.Write ("> ");
+                        string phoneNumber = Console.ReadLine();   
+                        int custId = manager.AddCustomer(new Customer(fullName, street, city, state, Int32.Parse(postalCode), phoneNumber));
+                    }
                 // Set Active Customer Menu
                 // By Ryan and Mitchell
                 // If option 2 chosen, gets and displays list of customers - user chooses which to set as active
                 if(choice == 2)
-                {
-                    CustomerManager _manager = new CustomerManager(db);
-                    Console.WriteLine("*************************************************");
-                    List<Customer> allCustomers = _manager.GetListCustomers();
-                    for (int i = 0; i < allCustomers.Count; i++ )
                     {
-                        Console.WriteLine($"{i+1}. {allCustomers[i].Name}");
+                        CustomerManager _manager = new CustomerManager(db);
+                        Console.WriteLine("*************************************************");
+                        List<Customer> allCustomers = _manager.GetListCustomers();
+                        for (int i = 0; i < allCustomers.Count; i++ )
+                        {
+                            Console.WriteLine($"{i+1}. {allCustomers[i].Name}");
+                        }
+                        Console.WriteLine("*************************************************");
+                        Console.WriteLine("Select a customer to be active");
+                        Console.Write("> ");
+                        string setThisCustomerAsActive = Console.ReadLine();
+                        activeCustomer.setActiveCustomerId(Int32.Parse(setThisCustomerAsActive));
+                        var active = ActiveCustomer.activeCustomerId;
+                        // potential getter will go here to convert customer ID to its corresponding name
+                        Console.WriteLine("Active customer ID is: " + active);
                     }
-                    Console.WriteLine("*************************************************");
-                    Console.WriteLine("Select a customer to be active");
-                    Console.Write("> ");
-                    string setThisCustomerAsActive = Console.ReadLine();
-                    activeCustomer.setActiveCustomerId(Int32.Parse(setThisCustomerAsActive));
-                    var active = ActiveCustomer.activeCustomerId;
-                    // potential getter will go here to convert customer ID to its corresponding name
-                    Console.WriteLine("Active customer ID is: " + active);
-                }
                 // If option 3 was chosen, enter payment type for active customer
                 // By Ryan
                 if (choice == 3)
-                {
-                    Console.WriteLine("Enter a payment type (visa, mastercard, etc)");
-                    Console.Write("> ");
-                    string paymentType= Console.ReadLine();
-                    Console.WriteLine("Enter the account # associated with your payment type");
-                    Console.Write("> ");
-                    string accountNum= Console.ReadLine();
-                    int customerId = ActiveCustomer.activeCustomerId;
-                    int paymentId = payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
-                }
+                    {
+                        Console.WriteLine("Enter a payment type (visa, mastercard, etc)");
+                        Console.Write("> ");
+                        string paymentType= Console.ReadLine();
+                        Console.WriteLine("Enter the account # associated with your payment type");
+                        Console.Write("> ");
+                        string accountNum= Console.ReadLine();
+                        int customerId = ActiveCustomer.activeCustomerId;
+                        int paymentId = payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
+                    }
                 // If option 4 was chosen, create a new product for the logged in user
                 // By Mitchell
                 if (choice == 4)
-                {   
-                    // product id is auto generated
-                    Console.WriteLine ("Enter product title");
-                    Console.Write ("> ");
-                    string Title = Console.ReadLine();
-                    ProductTypeManager _manager = new ProductTypeManager(db);
-                    Console.WriteLine("*************************************************");
-                    List<ProductType> allProductTypes = _manager.GetListProductTypes();
-                    for (int i = 0; i < allProductTypes.Count; i++ )
-                    {
-                        Console.WriteLine($"{i+1}. {allProductTypes[i].Type}");
+                    {   
+                        // product id is auto generated
+                        Console.WriteLine ("Enter product title");
+                        Console.Write ("> ");
+                        string Title = Console.ReadLine();
+                        ProductTypeManager _manager = new ProductTypeManager(db);
+                        Console.WriteLine("*************************************************");
+                        List<ProductType> allProductTypes = _manager.GetListProductTypes();
+                        for (int i = 0; i < allProductTypes.Count; i++ )
+                        {
+                            Console.WriteLine($"{i+1}. {allProductTypes[i].Type}");
+                        }
+                        Console.WriteLine("*************************************************");
+                        Console.WriteLine("Select an existing product type by number OR enter a new type");
+                        Console.Write("> ");
+                        int TypeId = 0;
+                        string enteredProductType = Console.ReadLine();
+                        if (Int32.TryParse(enteredProductType, out TypeId)) {
+                        } else {
+                            ProductType newProductType = new ProductType(enteredProductType);
+                            TypeId = _manager.AddProductType(newProductType);
+                        }
+                        var active = ActiveCustomer.activeCustomerId;
+                        Console.WriteLine ("Enter product description");
+                        Console.Write ("> ");
+                        string Description = Console.ReadLine();
+                        Console.WriteLine ("Enter price");
+                        Console.Write ("> ");
+                        string Price = Console.ReadLine();
+                        Console.WriteLine ("Enter quantity available");
+                        Console.Write ("> ");
+                        string QuantityAvailable = Console.ReadLine();
+                        int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
+                        int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                     }
-                    Console.WriteLine("*************************************************");
-                    Console.WriteLine("Select an existing product type by number OR enter a new type");
-                    Console.Write("> ");
-                    int TypeId = 0;
-                    string enteredProductType = Console.ReadLine();
-                    if (Int32.TryParse(enteredProductType, out TypeId)) {
-                    } else {
-                        ProductType newProductType = new ProductType(enteredProductType);
-                        TypeId = _manager.AddProductType(newProductType);
-                    }
-                    var active= ActiveCustomer.activeCustomerId;
-                    Console.WriteLine ("Enter product description");
-                    Console.Write ("> ");
-                    string Description = Console.ReadLine();
-                    Console.WriteLine ("Enter price");
-                    Console.Write ("> ");
-                    string Price = Console.ReadLine();
-                    Console.WriteLine ("Enter quantity available");
-                    Console.Write ("> ");
-                    string QuantityAvailable = Console.ReadLine();
-                    int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
-                    int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
-                }
                 // By Andy
                 if (choice == 5)
-                {
-                    Console.WriteLine("*********************");
-                    List<Product> productList = productManager.GetListOfProducts();
-                    int? activeOrder = orderManager.CreateOrder();
-                    if(activeOrder != null)
                     {
-                        Console.WriteLine("This Customer already has an open order.");
+                        Console.WriteLine("*********************");
+                        List<Product> productList = productManager.GetListOfProducts();
+                        int? activeOrder = orderManager.CreateOrder();
+                        if(activeOrder != null)
+                        {
+                            Console.WriteLine("This Customer already has an open order.");
+                        }
+                        else {
+                            Console.WriteLine("Created a new order for the customer");
+                        }
+                        Console.WriteLine("What product would you like to add?");
+                        int counter = 1;
+                        foreach (Product product in productList)
+                        {
+                            Console.WriteLine($"{counter}. {product.Title}");
+                            counter ++;
+                        }
+                        Console.Write("> ");
+                        string productChoice = Console.ReadLine();
+                        int productChoiceNum = Int32.Parse(productChoice);
+                        int? addedProductId = productList[productChoiceNum-1].ProductId;
+                        orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
+                        Console.WriteLine("Product Successfully Added.");
                     }
-                    else {
-                        Console.WriteLine("Created a new order for the customer");
-                    }
-                    Console.WriteLine("What product would you like to add?");
-                    int counter = 1;
-                    foreach (Product product in productList)
-                    {
-                        Console.WriteLine($"{counter}. {product.Title}");
-                        counter ++;
-                    }
-                    Console.Write("> ");
-                    string productChoice = Console.ReadLine();
-                    int productChoiceNum = Int32.Parse(productChoice);
-                    int? addedProductId = productList[productChoiceNum-1].ProductId;
-                    orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
-                    Console.WriteLine("Product Successfully Added.");
-                }
                 // If option 8 was chosen, edit an existing product
                 // By Mitchell
                 if (choice == 8)
-                {
-                    // gets list of product belonging to that customer
-                    var active = ActiveCustomer.activeCustomerId;
-                    List<Product> productList = productManager.getCustomersProducts(active);
-                    for (int i = 0; i < productList.Count; i++ )
                     {
-                        Console.WriteLine($"{i+1}. {productList[i].Title}");
+                        // gets list of product belonging to that customer
+                        var active = ActiveCustomer.activeCustomerId;
+                        List<Product> productList = productManager.getCustomersProducts(active);
+                        for (int i = 0; i < productList.Count; i++ )
+                        {
+                            Console.WriteLine($"{i+1}. {productList[i].Title}");
+                        }
+                        Console.WriteLine("*************************************************");
+                        Console.WriteLine("Select which of your products to edit");
+                        Console.Write("> ");
+                        string productIdToEdit = Console.ReadLine();
+                        // passes selected product id into getter to get product details
+                        Product productToEdit = productManager.getSingleProduct(Int32.Parse(productIdToEdit));
+                        Console.Write("> ");
+                        Console.WriteLine("Choose which field to edit");
+                        Console.WriteLine ($"1. Title: {productToEdit.Title}");
+                        Console.WriteLine ($"2. Description: {productToEdit.Description}");
+                        Console.WriteLine ($"3. Price: {productToEdit.Price}");
+                        Console.WriteLine ($"4. Quantity Available: {productToEdit.QuantityAvailable}");
+                        int fieldToEdit;
+                        Int32.TryParse (Console.ReadLine(), out fieldToEdit);
+                        switch (fieldToEdit)
+                        {
+                            case 1:
+                                Console.WriteLine ($"Enter new product title");
+                                productToEdit.Title = Console.ReadLine();
+                                break;
+                            case 2:
+                                Console.WriteLine ($"Enter new product description");
+                                productToEdit.Description = Console.ReadLine();
+                                break;
+                            case 3:
+                                Console.WriteLine ($"Enter new product price");
+                                productToEdit.Price = float.Parse(Console.ReadLine());
+                                break;
+                            case 4:
+                                Console.WriteLine ($"Enter new product QuantityAvailable");
+                                productToEdit.QuantityAvailable = Int32.Parse(Console.ReadLine());
+                                break;
+                        }
+                        productManager.updateProduct(Int32.Parse(productIdToEdit), productToEdit);
                     }
-                    Console.WriteLine("*************************************************");
-                    Console.WriteLine("Select which of your products to edit");
-                    Console.Write("> ");
-                    string productIdToEdit = Console.ReadLine();
-                    // passes selected product id into getter to get product details
-                    productManager.getSingleProduct(Int32.Parse(productIdToEdit));
-                    Console.Write("> ");
-                    // WRITE PRODUCT DETAILS TO CONSOLE
-                    // USER SELECTS WHICH FIELD TO EDIT ??
-                    Product editedProduct = new Product();
-                    productManager.updateProduct(Int32.Parse(productIdToEdit), editedProduct);
-                }
             } while (choice != 12);
         }
     }
