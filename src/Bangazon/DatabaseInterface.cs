@@ -123,7 +123,7 @@ namespace BangazonCLI
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
                 // Query if the passed table has been created
-                dbcmd.CommandText = $"select id from {tableName}";                     // does table "tableName" exist?
+                dbcmd.CommandText = $"select id from {tableName}";
 
                 try
                 {
@@ -135,7 +135,7 @@ namespace BangazonCLI
                 {
                     Console.WriteLine(ex.Message);
                     if (ex.Message.Contains("no such table"))
-                    {
+                    {   
                         Console.WriteLine(SQLstatement);
                         dbcmd.CommandText = SQLstatement;                  // SQLstatement passed in here to write X table
                         try
@@ -144,6 +144,7 @@ namespace BangazonCLI
                         }
                         catch (Microsoft.Data.Sqlite.SqliteException crex)
                         {
+                            var arbitraryToStopWarning = crex;
                             Console.WriteLine("Tried to make a table, and failed.");
                         }
                         dbcmd.Dispose ();
