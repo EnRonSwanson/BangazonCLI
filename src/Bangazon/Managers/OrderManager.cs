@@ -92,6 +92,39 @@ namespace BangazonCLI.Managers
             return new List<Order>();
         }
 
+        public void GetRevenueReport()
+        {
+            int currentActiveCust = ActiveCustomer.activeCustomerId;
+            List<int> completeOrderIds = new List<int>();
+            List<(string, int, float)> reportFields = new List<(string, int, float)>();
+            _db.Query($"SELECT DISTINCT op.orderid FROM orderproduct op, product p, [order] o WHERE p.sellerid = {currentActiveCust} AND op.productid = p.productid AND op.orderid = o.orderid AND o.paymenttypeid IS NOT NULL",
+                    (SqliteDataReader reader) => {
+                                while (reader.Read ())
+                                {
+                                    completeOrderIds.Add(reader.GetInt32(0));                        
+                                }
+                    });
+            foreach(var order in completeOrderIds)
+            {
+                reportFields.Clear();
+                Console.WriteLine($"Order #{order}");
+                Console.WriteLine("-------------------------");
+                _db.Query($"SELECT p.title, COUNT(op.productid), p.price FROM product p, orderproduct op WHERE op.orderid = {order} AND p.sellerid = {currentActiveCust} AND p.productid = op.productid GROUP BY op.productid",
+                    (SqliteDataReader reader) => {
+                                while (reader.Read ())
+                                {
+                                    reportFields.Add((reader[0].ToString(), reader.GetInt32(1), reader.GetFloat(2)));                        
+                                }
+                    });
+                foreach(var product in reportFields)
+                {
+                    Console.WriteLine("{0,-20} {1,5} ${3,5:N2}", product.Item1, product.Item2, product.Item3*product.Item2);
+                }
+                Console.WriteLine("");
+
+            }
+        }
+
 
     }
 }
