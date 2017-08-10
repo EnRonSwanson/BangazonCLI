@@ -160,18 +160,28 @@ namespace BangazonCLI
                             Console.WriteLine("Created a new order for the customer");
                         }
                         Console.WriteLine("What product would you like to add?");
-                        int counter = 1;
-                        foreach (Product product in productList)
-                        {
-                            Console.WriteLine($"{counter}. {product.Title}");
-                            counter ++;
-                        }
-                        Console.Write("> ");
-                        string productChoice = Console.ReadLine();
-                        int productChoiceNum = Int32.Parse(productChoice);
-                        int? addedProductId = productList[productChoiceNum-1].ProductId;
-                        orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
-                        Console.WriteLine("Product Successfully Added.");
+                        int productChoiceNum;
+                        do {
+                            int counter = 1;
+                            foreach (Product product in productList)
+                            {
+                                Console.WriteLine($"{counter}. {product.Title}");
+                                counter ++;
+                            }
+                            Console.WriteLine("99. Exit to main menu");
+                            Console.Write("> ");
+                            string productChoice = Console.ReadLine();
+                            productChoiceNum = Int32.Parse(productChoice);
+                            if(productChoiceNum != 99)
+                            {
+                                int? addedProductId = productList[productChoiceNum-1].ProductId;
+                                orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
+                                Console.WriteLine("Product Successfully Added.");
+                            }
+
+                        } while(productChoiceNum != 99);
+
+
                     }
                 // If option 8 was chosen, edit an existing product
                 // By Mitchell
