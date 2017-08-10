@@ -39,6 +39,15 @@ namespace BangazonCLI
               insert into orderProduct values (null, 2, 4);
               insert into orderProduct values (null, 2, 2);
               insert into orderProduct values (null, 3, 4);
+              insert into orderProduct values (null, 4, 2);
+              insert into orderProduct values (null, 4, 1);
+              insert into orderProduct values (null, 4, 2);
+              insert into orderProduct values (null, 5, 3);
+              insert into orderProduct values (null, 5, 4);
+              insert into orderProduct values (null, 5, 4);
+              insert into orderProduct values (null, 6, 4);
+              insert into orderProduct values (null, 6, 5);
+              insert into orderProduct values (null, 6, 6);
               insert into paymentType values (null, 1, 'Visa', '987987987987');
               insert into paymentType values (null, 2, 'Mastercard', '876876876876');
               insert into paymentType values (null, 3, 'Amex', '765765765765');

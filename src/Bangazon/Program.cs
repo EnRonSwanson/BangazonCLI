@@ -38,8 +38,10 @@ namespace BangazonCLI
                 Console.WriteLine ("4. Add product to sell");
                 Console.WriteLine ("5. Add Product to Shopping Cart");
                 Console.WriteLine ("6. Complete an order");
+                Console.WriteLine ("7. Remove customer product");
                 Console.WriteLine ("8. Update product information");
                 Console.WriteLine ("9. Show stale products");
+                Console.WriteLine ("10. Get Revenue Report for customer");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -161,18 +163,28 @@ namespace BangazonCLI
                             Console.WriteLine("Created a new order for the customer");
                         }
                         Console.WriteLine("What product would you like to add?");
-                        int counter = 1;
-                        foreach (Product product in productList)
-                        {
-                            Console.WriteLine($"{counter}. {product.Title}");
-                            counter ++;
-                        }
-                        Console.Write("> ");
-                        string productChoice = Console.ReadLine();
-                        int productChoiceNum = Int32.Parse(productChoice);
-                        int? addedProductId = productList[productChoiceNum-1].ProductId;
-                        orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
-                        Console.WriteLine("Product Successfully Added.");
+                        int productChoiceNum;
+                        do {
+                            int counter = 1;
+                            foreach (Product product in productList)
+                            {
+                                Console.WriteLine($"{counter}. {product.Title}");
+                                counter ++;
+                            }
+                            Console.WriteLine("99. Exit to main menu");
+                            Console.Write("> ");
+                            string productChoice = Console.ReadLine();
+                            productChoiceNum = Int32.Parse(productChoice);
+                            if(productChoiceNum != 99)
+                            {
+                                int? addedProductId = productList[productChoiceNum-1].ProductId;
+                                orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
+                                Console.WriteLine("Product Successfully Added.");
+                            }
+
+                        } while(productChoiceNum != 99);
+
+
                     }
                 // If option 8 was chosen, edit an existing product
                 // By Mitchell
@@ -232,7 +244,15 @@ namespace BangazonCLI
                         productManager.updateProduct(Int32.Parse(productIdToEdit), columnToEdit, newValue);
                         Console.WriteLine("Product to sell successfully edited.");
                     }
-                if (choice == 6)
+
+
+                    if(choice == 10)
+                    {
+                        orderManager.GetRevenueReport();
+                    }
+
+
+                    if (choice == 6)
                     {
                         int? orderId = orderManager.CheckForIncompleteOrder();
                         string total = orderManager.GetOrderTotal(orderId);
@@ -263,6 +283,7 @@ namespace BangazonCLI
                         }
                         else {
                         }
+
                 }
                 // If option 9 was chosen, display customer's list of stale products
                 // Program choices by Mitchell, product manager methods by team
@@ -284,6 +305,35 @@ namespace BangazonCLI
                             choice = 999;    // choosing 999 effectively returns user to main menu
                         }
                     }
+
+                        //By: Ryan McCarty
+                        //Menu option for DELETE
+                        if(choice ==7)
+                        {
+                            Console.WriteLine("*************************************************");
+                            Console.WriteLine("Choose a product to delete");
+                            int customerId = ActiveCustomer.activeCustomerId;
+                            List<Product> activeCustProducts= productManager.getActiveCustomersNonOrderProdcuts(customerId);
+                            foreach(var x in activeCustProducts)
+                            {
+                                Console.WriteLine($"{x.ProductId}. {x.Title} ");
+                            }
+                            Console.Write(">");
+                            string prodChoice= Console.ReadLine();
+                            Console.WriteLine(prodChoice);
+                            int delProd= Int32.Parse(prodChoice);
+                            bool result= productManager.deleteProduct(delProd);
+                            if(result ==true)
+                            {
+                                Console.WriteLine("Product was deleted");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Deletion failed");
+                            }
+                            
+                        }
+
             } while (choice != 12);
         }
     }
