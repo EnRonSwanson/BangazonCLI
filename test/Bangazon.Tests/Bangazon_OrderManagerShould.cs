@@ -45,18 +45,20 @@ namespace BangazonCLI.Tests
         }
 
 
-        // [Fact]
-        // public void AddPaymentTypeToOrderShould()
-        // {
-        //     CustomerManager _customerManager = new CustomerManager(_db);
-        //     ActiveCustomer _activeManager = new ActiveCustomer();
-        //     var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
-        //     _activeManager.setActiveCustomerId(newCustomerId);
-        //     var newOrderId = _orderManager.CreateOrder();
-        //     var orderWithPayment = _orderManager.AddPaymentTypeToOrder(newOrderId); //the parameter passed is the id of the payment type
-        //     Assert.False(orderWithPayment);
+        [Fact]
+        public void AddPaymentTypeToOrderShould()
+        {
+            CustomerManager _customerManager = new CustomerManager(_db);
+            ActiveCustomer _activeManager = new ActiveCustomer();
+            PaymentTypeManager _paymentManager = new PaymentTypeManager(_db);
+            var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+            _activeManager.setActiveCustomerId(newCustomerId);
+            var newPayment = _paymentManager.CreatePaymentType(new PaymentType(newCustomerId, "Merit", "1"));
+            var newOrderId = _orderManager.CreateOrder();
+            var orderWithPayment = _orderManager.AddPaymentTypeToOrder(newPayment); //the parameter passed is the id of the payment type
+            Assert.False(orderWithPayment);
             
-        // }
+        }
         [Fact]
         public void AddProductToOrderShould()
         {

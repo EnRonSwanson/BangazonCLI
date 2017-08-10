@@ -83,6 +83,23 @@ namespace BangazonCLI.Managers
             _db.Delete($"DELETE from product where product.productId={productId}");
             return true;
         }
+        public List<Product> getActiveCustomersNonOrderProdcuts(int activeCustomer)
+        {
+            _db.Query($"select product.price, product.title, product.description,product.productid, product.sellerID, product.quantityavailable from product where product.productid not in (select orderproduct.productID from orderproduct) and product.sellerID= {activeCustomer}",
+                (SqliteDataReader reader) => {
+                    _products.Clear();
+                    while (reader.Read ())
+                    {
+                        _products.Add(new Product(
+                            reader.GetInt32(0),
+                            reader[1].ToString()
+                        ));
+                    }
+                }
+            );
+
+            return _products;
+        }
 
         public List<Product> GetListOfProducts()
         {
