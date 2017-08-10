@@ -114,6 +114,23 @@ namespace BangazonCLI.Managers
 
             return _products;
         }
+        public List<Product> getNinetyDayOldOrderProducts()
+        {
+            _db.Query("select distinct orderproduct.productID, [order].datecreated from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where [order].datecreated < date('now', '-90 day') and [order].paymenttypeID is null;",
+                (SqliteDataReader reader) => {
+                    _products.Clear();
+                    while (reader.Read ())
+                    {
+                        _products.Add(new Product(
+                            reader.GetInt32(0),
+                            reader[1].ToString()
+                        ));
+                    }
+                }
+            );
+
+            return _products;
+        }
 
     }
 }
