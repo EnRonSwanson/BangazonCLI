@@ -43,7 +43,7 @@ namespace Bangazon.Tests
         
         //Purpose: Test creates new product and product type, then retrieves the same product and asserts that the added Product id is equal to the result id
         [Fact]
-        public void setProductShould()
+        public void getProductShould()
         {
             ProductType newProductType = new ProductType("Home Decor");
             int typeid = _productTypeManager.AddProductType(newProductType);
