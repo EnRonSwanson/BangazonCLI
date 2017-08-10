@@ -232,7 +232,6 @@ namespace BangazonCLI
                         productManager.updateProduct(Int32.Parse(productIdToEdit), columnToEdit, newValue);
                         Console.WriteLine("Product to sell successfully edited.");
                     }
-
                 if (choice == 6)
                     {
                         int? orderId = orderManager.CheckForIncompleteOrder();
@@ -276,10 +275,9 @@ namespace BangazonCLI
                         foreach(Product staleProduct in staleProducts)
                         {
                             Console.WriteLine($"{counter+1}. {staleProduct.Title}");
-                            Console.WriteLine($"taco");
                             counter ++;
                         }
-                        Console.WriteLine($"{counter}. Return to main menu.");
+                        Console.WriteLine($"{counter+1}. Return to main menu.");
                         Console.WriteLine("> ");
                         int staleChoice = Int32.Parse(Console.ReadLine());
                         if (staleChoice == counter) {
