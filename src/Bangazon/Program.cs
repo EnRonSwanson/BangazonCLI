@@ -310,18 +310,25 @@ namespace BangazonCLI
                         if(choice ==7)
                         {
                             Console.WriteLine("*************************************************");
-                            Console.WriteLine("Choose a product to delete");
+                            Console.WriteLine("Enter a product Id");
                             int customerId = ActiveCustomer.activeCustomerId;
                             List<Product> activeCustProducts= productManager.getActiveCustomersNonOrderProdcuts(customerId);
+                            int counter=0;
                             foreach(var x in activeCustProducts)
                             {
-                                Console.WriteLine($"{x.ProductId}. {x.Title} ");
+                                Console.WriteLine($"{counter+1}. {x.Title}, Product Id={x.ProductId}  ");
+                                counter++;
                             }
+                            Console.WriteLine("99. Return to main menu");
                             Console.Write(">");
                             string prodChoice= Console.ReadLine();
                             Console.WriteLine(prodChoice);
                             int delProd= Int32.Parse(prodChoice);
                             bool result= productManager.deleteProduct(delProd);
+                            if (delProd== counter)
+                            {
+                                choice=99;
+                            }
                             if(result ==true)
                             {
                                 Console.WriteLine("Product was deleted");
