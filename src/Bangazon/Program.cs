@@ -38,7 +38,7 @@ namespace BangazonCLI
                 Console.WriteLine ("3. Create a payment type");
                 Console.WriteLine ("4. Add product to sell");
                 Console.WriteLine ("5. Add Product to Shopping Cart");
-
+                Console.WriteLine ("6. Complete an order");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -180,6 +180,41 @@ namespace BangazonCLI
 
                     orderManager.AddProductToOrder((int)addedProductId, (int)activeOrder);
                     Console.WriteLine("Product Successfully Added.");
+                }
+                if (choice == 6)
+                {
+                    int? orderId = orderManager.CheckForIncompleteOrder();
+                    string total = orderManager.GetOrderTotal(orderId);
+                    Console.WriteLine($"Your order total is ${total}. Ready to purchase"); 
+                    Console.WriteLine("(Y/N) >");
+                    string answer = Console.ReadLine();
+                    if (answer == "Y")
+                    {
+                        Console.WriteLine("Choose a payment option");
+                        int customerId = ActiveCustomer.activeCustomerId;
+                        List<PaymentType> paymentTypeList = payment.GetCustomerPaymentTypes(customerId);
+                        int counter = 1;
+                        foreach(PaymentType paymenttype in paymentTypeList)
+                        {
+                            Console.WriteLine($"{counter}. {paymenttype.Type}");
+                            counter ++;
+                        
+                        }
+                        Console.Write("> ");
+                        string paymentChoice = Console.ReadLine();
+                        int paymentChoiceNum = Int32.Parse(paymentChoice);
+                        int addedPaymentId = paymentTypeList[paymentChoiceNum-1].PaymentTypeId;
+                        bool result = orderManager.AddPaymentTypeToOrder(addedPaymentId);
+                        if (result == true)
+                        {
+                            Console.WriteLine("Your Order has been completed");
+                        } else {
+                            Console.WriteLine("Failed");
+                        }
+                    }
+                    else {
+                    }
+
                 }
             }while (choice != 12);
         }

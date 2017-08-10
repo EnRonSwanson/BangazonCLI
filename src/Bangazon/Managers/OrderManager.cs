@@ -72,13 +72,8 @@ namespace BangazonCLI.Managers
                         
                                 }
                             });
-            int confirmedID = _db.Insert($"UPDATE [order] SET paymenttypeid = {paymentTypeId}, DateCompleted = '{DateTime.Now}' WHERE orderid = {orderId}");
-            if(orderId == confirmedID)
-            {
-                return true;
-            } else {
-                return false;
-            }
+            _db.Update($"UPDATE [order] SET paymenttypeid = {paymentTypeId}, DateCompleted = '{DateTime.Now}' WHERE orderid = {orderId}");
+            return true;
         }
         //Method Author: Andrew Rock
         // Method does what it says, added a product to an order through a join table
@@ -86,6 +81,19 @@ namespace BangazonCLI.Managers
         {
             var orderProductId = _db.Insert($"INSERT INTO orderproduct VALUES (null, {orderId}, {addedProductId})");
             return orderProductId;
+        }
+
+        public string GetOrderTotal(int? orderId)
+        {
+            string total = "0";
+            _db.Query($"select sum(p.price) from Product p, OrderProduct op where op.OrderID = {orderId} and op.productid = p.productId",
+                            (SqliteDataReader reader) => {
+                                while (reader.Read ())
+                                {
+                                  total = reader[0].ToString();
+                                }
+                            });
+            return total;            
         }
         public List<Order> GetAllCompletedOrders()
         {
