@@ -38,6 +38,7 @@ namespace BangazonCLI
                 Console.WriteLine ("3. Create a payment type");
                 Console.WriteLine ("4. Add product to sell");
                 Console.WriteLine ("5. Add Product to Shopping Cart");
+
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -147,7 +148,10 @@ namespace BangazonCLI
                     int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
                     int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                 }
-             
+                //Adding a product to an order
+                //Written by Andrew Rock
+                //Checks if a customer already has an open order (if not it creates a new order)
+                //Then displays a list of products to add to the open order
                 if (choice == 5)
                 {
                     Console.WriteLine("*********************");

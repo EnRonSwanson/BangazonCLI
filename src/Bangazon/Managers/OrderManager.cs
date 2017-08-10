@@ -80,6 +80,8 @@ namespace BangazonCLI.Managers
                 return false;
             }
         }
+        //Method Author: Andrew Rock
+        // Method does what it says, added a product to an order through a join table
         public int AddProductToOrder(int addedProductId, int orderId)
         {
             var orderProductId = _db.Insert($"INSERT INTO orderproduct VALUES (null, {orderId}, {addedProductId})");
