@@ -40,7 +40,8 @@ namespace BangazonCLI
                 Console.WriteLine ("6. Complete an order");
                 Console.WriteLine ("7. Remove customer product");
                 Console.WriteLine ("8. Update product information");
-                Console.WriteLine ("9. Get Revenue Report for customer");
+                Console.WriteLine ("9. Show stale products");
+                Console.WriteLine ("10. Get Revenue Report for customer");
                 Console.WriteLine ("12. Leave Bangazon!");
                 Console.Write ("> ");
                 Int32.TryParse (Console.ReadLine(), out choice);
@@ -141,6 +142,7 @@ namespace BangazonCLI
                         string QuantityAvailable = Console.ReadLine();
                         int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
                         int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
+                        Console.WriteLine("Product to sell successfully added.");
                     }
 
                 //Adding a product to an order
@@ -240,9 +242,11 @@ namespace BangazonCLI
                                 break;
                         }
                         productManager.updateProduct(Int32.Parse(productIdToEdit), columnToEdit, newValue);
+                        Console.WriteLine("Product to sell successfully edited.");
                     }
 
-                    if(choice == 9)
+
+                    if(choice == 10)
                     {
                         orderManager.GetRevenueReport();
                     }
@@ -255,7 +259,7 @@ namespace BangazonCLI
                         Console.WriteLine($"Your order total is ${total}. Ready to purchase"); 
                         Console.WriteLine("(Y/N) >");
                         string answer = Console.ReadLine();
-                        if (answer == "Y")
+                        if (answer == "Y" || answer == "y")
                         {
                             Console.WriteLine("Choose a payment option");
                             int customerId = ActiveCustomer.activeCustomerId;
@@ -265,7 +269,6 @@ namespace BangazonCLI
                             {
                                 Console.WriteLine($"{paymenttype.PaymentTypeId}. {paymenttype.Type}");
                                 counter ++;
-                            
                             }
                             Console.Write("> ");
                             string paymentChoice = Console.ReadLine();
@@ -280,7 +283,28 @@ namespace BangazonCLI
                         }
                         else {
                         }
+
+                }
+                // If option 9 was chosen, display customer's list of stale products
+                // Program choices by Mitchell, product manager methods by team
+                if (choice == 9)
+                    {
+                        Console.WriteLine("Here is the list of all stale products: ");
+                        List<Product> staleProducts = productManager.getAllStaleProducts();
+                        int counter = 0;
+                        foreach(Product staleProduct in staleProducts)
+                        {
+                            Console.WriteLine($"{counter+1}. {staleProduct.Title}");
+                            counter ++;
+                        }
+                        Console.WriteLine($"{counter+1}. Return to main menu.");
+                        Console.WriteLine("> ");
+                        int staleChoice = Int32.Parse(Console.ReadLine());
+                        if (staleChoice == counter) {
+                            choice = 999;    // choosing 999 effectively returns user to main menu
+                        }
                     }
+
                         //By: Ryan McCarty
                         //Menu option for DELETE
                         if(choice ==7)
@@ -308,9 +332,6 @@ namespace BangazonCLI
                             }
                             
                         }
-
-                
-    
 
             } while (choice != 12);
         }
