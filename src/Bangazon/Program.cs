@@ -245,15 +245,14 @@ namespace BangazonCLI
                             int counter = 1;
                             foreach(PaymentType paymenttype in paymentTypeList)
                             {
-                                Console.WriteLine($"{counter}. {paymenttype.Type}");
+                                Console.WriteLine($"{paymenttype.PaymentTypeId}. {paymenttype.Type}");
                                 counter ++;
                             
                             }
                             Console.Write("> ");
                             string paymentChoice = Console.ReadLine();
                             int paymentChoiceNum = Int32.Parse(paymentChoice);
-                            int addedPaymentId = paymentTypeList[paymentChoiceNum-1].PaymentTypeId;
-                            bool result = orderManager.AddPaymentTypeToOrder(addedPaymentId);
+                            bool result = orderManager.AddPaymentTypeToOrder(paymentChoiceNum);
                             if (result == true)
                             {
                                 Console.WriteLine("Your Order has been completed");

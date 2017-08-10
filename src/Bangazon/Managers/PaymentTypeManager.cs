@@ -33,6 +33,7 @@ namespace BangazonCLI
                     while (reader.Read ())
                     {
                         _paymentTypes.Add(new PaymentType(
+                            reader.GetInt32(0),
                             reader.GetInt32(1), 
                             reader[2].ToString(), 
                             reader[3].ToString()));
