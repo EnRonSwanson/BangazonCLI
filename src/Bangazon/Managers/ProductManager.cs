@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BangazonCLI.Models;
 using Microsoft.Data.Sqlite;
 
-// Authors: Madeline and Mitchell
+// Authors: Madeline, Mitchell, and Ryan
 // Accessible methods regarding Product
 
 namespace BangazonCLI.Managers
@@ -22,14 +22,14 @@ namespace BangazonCLI.Managers
         {
             // Inserting new product into db
             int newProductId = _db.Insert( $@"insert into product values (
-            null, 
-            '{product.ProductTypeId}', 
-            '{product.SellerId}', 
-            '{product.Title}', 
-            '{product.QuantityAvailable}', 
-            '{product.Description}', 
-            '{product.Price}', 
-            '{product.DateCreated}')");
+            null,
+            '{product.ProductTypeId}',
+            '{product.SellerId}',
+            '{product.Title}',
+            '{product.QuantityAvailable}',
+            '{product.Description}',
+            '{product.Price}',
+            '{product.DateCreated.ToString("yyyy-MM-dd")}')");
 
             return newProductId;
         }
@@ -42,7 +42,7 @@ namespace BangazonCLI.Managers
                 while(reader.Read())
                 {
 
-                    Console.WriteLine($"\n\n{reader[7].ToString()}\n\n");
+                    Console.WriteLine($"Product was created on: \n{reader[7].ToString()}\n");                   
 
                     _products.Add(new Product(
                         reader.GetInt32(0),
@@ -119,6 +119,7 @@ namespace BangazonCLI.Managers
             return _products;
         }
 
+        // by Ryan
         public List<Product> getAllStaleProducts()
         {
             _db.Query("select p.productId, p.title, p.datecreated 'Product Created', p.quantityavailable from Product p where p.productid NOT IN (select productid from OrderProduct) and p.datecreated < date('now', '-180 day') union select product.productid, product.title, product.datecreated 'Product Created', product.quantityavailable from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where [order].datecreated < date('now', '-90 day') and [order].paymenttypeID is null union select product.productid, product.title, product.datecreated 'Product Created', product.quantityavailable from orderproduct join product on product.productid= orderproduct.productID join [order] on [order].orderid = orderproduct.orderID where product.datecreated < date('now', '-180 day') and [order].paymenttypeID is not null and product.quantityavailable !=0",
