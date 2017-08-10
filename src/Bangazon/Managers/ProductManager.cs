@@ -12,7 +12,7 @@ namespace BangazonCLI.Managers
     {
         private List<Product> _products = new List<Product>();
         private DatabaseInterface _db;
-        private int _custProd;
+        // private int _custProd;
         public ProductManager(DatabaseInterface db)
         {
             _db = db;
