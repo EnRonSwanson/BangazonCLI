@@ -45,12 +45,12 @@ namespace BangazonCLI
               insert into producttype values (null, 'Home Goods');
               insert into producttype values (null, 'Accessories');
               insert into producttype values (null, 'Electronics');
-              insert into product values (null, 1, 1, 'Lamp', 42, 'Lights stuff up', 22.98, '20120618 10:34:09 AM');
-              insert into product values (null, 2, 2, 'Watch', 16, 'Tells time', 33.45, '20120618 10:34:09 AM');
-              insert into product values (null, 3, 3, 'Headphones', 32, 'Plays music', 50.01, '20120618 10:34:09 AM');
-              insert into product values (null, 1, 3, 'Table', 77, 'Corner or coffee', 5.51, '20170618 10:34:09 AM');
-              insert into product values (null, 2, 1, 'Hat', 362, 'Looks great', 7.90, '20170718 10:34:09 AM');
-              insert into product values (null, 3, 2, 'Laptop', 55, 'Runs programs', 890.01, '20170801 10:34:09 AM');
+              insert into product values (null, 1, 1, 'Lamp', 42, 'Lights stuff up', 22.98, '6/18/17 10:34:09 AM');
+              insert into product values (null, 2, 2, 'Watch', 16, 'Tells time', 33.45, '6/18/12 10:34:09 AM');
+              insert into product values (null, 3, 3, 'Headphones', 32, 'Plays music', 50.01, '6/18/13 10:34:09 AM');
+              insert into product values (null, 1, 3, 'Table', 77, 'Corner or coffee', 5.51, '6/18/17 10:34:09 AM');
+              insert into product values (null, 2, 1, 'Hat', 362, 'Looks great', 7.90, '7/18/17 10:34:09 AM');
+              insert into product values (null, 3, 2, 'Laptop', 55, 'Runs programs', 890.01, '8/1/17 10:34:09 AM');
               "
             );
           }

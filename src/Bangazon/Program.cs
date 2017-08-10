@@ -175,7 +175,7 @@ namespace BangazonCLI
                         List<Product> productList = productManager.getCustomersProducts(active);
                         for (int i = 0; i < productList.Count; i++ )
                         {
-                            Console.WriteLine($"{i+1}. {productList[i].Title}");
+                            Console.WriteLine($"{productList[i].ProductId}. {productList[i].Title}");
                         }
                         Console.WriteLine("*************************************************");
                         Console.WriteLine("Select which of your products to edit");
@@ -191,26 +191,32 @@ namespace BangazonCLI
                         Console.WriteLine ($"4. Quantity Available: {productToEdit.QuantityAvailable}");
                         int fieldToEdit;
                         Int32.TryParse (Console.ReadLine(), out fieldToEdit);
+                        string columnToEdit = "";
+                        string newValue = "";
                         switch (fieldToEdit)
                         {
                             case 1:
+                                columnToEdit = "Title";
                                 Console.WriteLine ($"Enter new product title");
-                                productToEdit.Title = Console.ReadLine();
+                                newValue = Console.ReadLine();
                                 break;
                             case 2:
+                                columnToEdit = "Description";
                                 Console.WriteLine ($"Enter new product description");
-                                productToEdit.Description = Console.ReadLine();
+                                newValue = Console.ReadLine();
                                 break;
                             case 3:
+                                columnToEdit = "Price";
                                 Console.WriteLine ($"Enter new product price");
-                                productToEdit.Price = float.Parse(Console.ReadLine());
+                                newValue = Console.ReadLine();
                                 break;
                             case 4:
+                                columnToEdit = "QuantityAvailable";
                                 Console.WriteLine ($"Enter new product QuantityAvailable");
-                                productToEdit.QuantityAvailable = Int32.Parse(Console.ReadLine());
+                                newValue= Console.ReadLine();
                                 break;
                         }
-                        productManager.updateProduct(Int32.Parse(productIdToEdit), productToEdit);
+                        productManager.updateProduct(Int32.Parse(productIdToEdit), columnToEdit, newValue);
                     }
             } while (choice != 12);
         }

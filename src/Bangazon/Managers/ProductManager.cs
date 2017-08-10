@@ -41,6 +41,9 @@ namespace BangazonCLI.Managers
                 _products.Clear();
                 while(reader.Read())
                 {
+
+                    Console.WriteLine($"\n\n{reader[7].ToString()}\n\n");
+
                     _products.Add(new Product(
                         reader.GetInt32(0),
                         reader.GetInt32(1),
@@ -49,7 +52,8 @@ namespace BangazonCLI.Managers
                         reader.GetInt32(4),
                         reader[5].ToString(),
                         reader.GetFloat(6),
-                        reader.GetDateTime(7)
+                        // DateTime.ParseExact(reader[7].ToString(), "MM/dd/yy hh:mm:ss tt", null)
+                        DateTime.Parse(reader[7].ToString())
                     ));
                 }
             });
@@ -69,15 +73,21 @@ namespace BangazonCLI.Managers
             return singleProduct;
         }
 
-        public bool updateProduct(int productId, Product product)
+        // public bool updateProduct(int productId, Product product)
+        // {
+        //    _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
+        //    return true;
+        // }
+
+        public bool updateProduct(int productId, string columnToEdit, string newValue)
         {
-           _db.Update($"UPDATE product SET title='{product.Title}', quantityAvailable= {product.QuantityAvailable}, description='{product.Description}', price= {product.Price} WHERE  productId= {productId}");
+           _db.Update($"update product set {columnToEdit}='{newValue}' where productId= {productId}");
            return true;
         }
 
         public bool deleteProduct(int productId)
         {
-            _db.Delete($"DELETE from product  where product.productId={productId}");
+            _db.Delete($"DELETE from product where product.productId={productId}");
             return true;
         }
 
