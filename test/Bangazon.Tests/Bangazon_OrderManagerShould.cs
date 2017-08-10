@@ -56,7 +56,7 @@ namespace BangazonCLI.Tests
             var newPayment = _paymentManager.CreatePaymentType(new PaymentType(newCustomerId, "Merit", "1"));
             var newOrderId = _orderManager.CreateOrder();
             var orderWithPayment = _orderManager.AddPaymentTypeToOrder(newPayment); //the parameter passed is the id of the payment type
-            Assert.False(orderWithPayment);
+            Assert.True(orderWithPayment);
             
         }
         [Fact]
@@ -81,7 +81,22 @@ namespace BangazonCLI.Tests
             var completedOrders = _orderManager.GetAllCompletedOrders();
             Assert.IsType<List<Order>>(completedOrders);
         }
-
+        [Fact]
+        public void GetOrderTotalShould()
+        {
+            CustomerManager _customerManager = new CustomerManager(_db);
+            ActiveCustomer _activeManager = new ActiveCustomer();
+            ProductManager _productManager = new ProductManager(_db);
+            ProductTypeManager _productTypeManager = new ProductTypeManager(_db);
+            var newCustomerId = _customerManager.AddCustomer(new Customer("Bob", "Some Street", "City", "TN", 12345, "5555555555"));
+            _activeManager.setActiveCustomerId(newCustomerId);
+            var newProductTypeId = _productTypeManager.AddProductType(new ProductType("taco"));
+            var newProductId = _productManager.CreateProduct(new Product(newProductTypeId, "taco", 25, "string description", 25, newCustomerId));
+            var orderId = _orderManager.CreateOrder();
+            var orderProductId = _orderManager.AddProductToOrder(newProductId, orderId);
+            string total = _orderManager.GetOrderTotal(orderId);
+            Assert.True(total == "25");
+        }
         public void Dispose()
         {
             _db.Delete("DELETE FROM [order]");

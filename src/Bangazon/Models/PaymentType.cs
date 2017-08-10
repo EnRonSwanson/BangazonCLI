@@ -24,5 +24,12 @@ namespace BangazonCLI.Models
 
     }
 
+    public PaymentType(int paymenttypeId, int custId, string type, string accountNumber)
+    {
+      PaymentTypeId = paymenttypeId;
+      CustomerId = custId;
+      Type = type;
+      AccountNumber = accountNumber;
+    }
   }
 }
