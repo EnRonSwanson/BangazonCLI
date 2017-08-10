@@ -78,9 +78,9 @@ namespace BangazonCLI.Managers
            return true;
         }
 
-        public bool deleteProduct(int productId)
+        public bool deleteProduct(int prodId)
         {
-            _db.Delete($"DELETE from product where product.productId={productId}");
+            _db.Delete($"DELETE from product where productId={prodId}");
             return true;
         }
         public List<Product> getActiveCustomersNonOrderProdcuts(int activeCustomer)
@@ -91,7 +91,7 @@ namespace BangazonCLI.Managers
                     while (reader.Read ())
                     {
                         _products.Add(new Product(
-                            reader.GetInt32(0),
+                            reader.GetInt32(3),
                             reader[1].ToString()
                         ));
                     }
