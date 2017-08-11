@@ -101,9 +101,9 @@ namespace BangazonCLI.Managers
             return _products;
         }
 
-        public List<Product> GetListOfProducts()
+        public List<Product> GetListOfProducts(int activeId)
         {
-            _db.Query("select productid, title from product",
+            _db.Query($"select productid, title from product where product.sellerId != {activeId}",
                 (SqliteDataReader reader) => {
                     _products.Clear();
                     while (reader.Read ())
