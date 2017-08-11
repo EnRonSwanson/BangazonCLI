@@ -14,7 +14,7 @@ namespace BangazonCLI
     {
         public static void Main(string[] args)
         {
-            var db = new DatabaseInterface("BANGAZON_CLI_DB");
+        var db = new DatabaseInterface("BANGAZON_CLI_DB"); 
             ActiveCustomer activeCustomer = new ActiveCustomer();
             ProductManager productManager = new ProductManager(db);
             PaymentTypeManager payment= new PaymentTypeManager(db);
@@ -169,8 +169,9 @@ namespace BangazonCLI
                     {
                         if (ActiveCustomer.activeCustomerId != 0)
                         {
+                        int buyerId= ActiveCustomer.activeCustomerId;
                         Console.WriteLine("*********************");
-                        List<Product> productList = productManager.GetListOfProducts();
+                        List<Product> productList = productManager.GetListOfProducts(buyerId);
                         int? activeOrder = orderManager.CreateOrder();
                         if(activeOrder != null)
                         {
