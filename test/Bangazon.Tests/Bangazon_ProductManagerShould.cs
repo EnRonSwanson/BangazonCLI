@@ -70,7 +70,7 @@ namespace Bangazon.Tests
             Product product2 = new Product(1, "Rug", 5, "Awesome shag rug - 8x10", 125.99f, 1);
             int product1ThatWasCreated = _productManager.CreateProduct(product1);
             int product2ThatWasCreated = _productManager.CreateProduct(product2);
-            List<Product> listofProducts = _productManager.GetListOfProducts();
+            List<Product> listofProducts = _productManager.GetListOfProducts(1);
             Assert.IsType<List<Product>>(listofProducts);
         }
         
