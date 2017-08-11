@@ -94,6 +94,9 @@ namespace BangazonCLI.Managers
             _db.Delete($"DELETE from product where productId={prodId}");
             return true;
         }
+
+        //RETURNS A LIST OF CUSTOMER PRODUCTS THAT ARE NOT ON ANY ORDERS
+        //by: Ryan
         public List<Product> getActiveCustomersNonOrderProdcuts(int activeCustomer)
         {
             _db.Query($"select product.price, product.title, product.description,product.productid, product.sellerID, product.quantityavailable from product where product.productid not in (select orderproduct.productID from orderproduct) and product.sellerID= {activeCustomer}",
@@ -129,7 +132,7 @@ namespace BangazonCLI.Managers
 
             return _products;
         }
-
+        //RETURNS A LIST OF PRODUCTS THAT ARE STALE (180 OLD PRODUCTS, ORDERS THAT HAVEN'T BEEN COMPLETED AND ARE 90 DAYS OLD AND PRODUCTS ON ORDERS THAT HAVE BEEN COMPLETED BUT HAVE A REMAINING QUANTITY)
         // by Ryan
         public List<Product> getAllStaleProducts()
         {
