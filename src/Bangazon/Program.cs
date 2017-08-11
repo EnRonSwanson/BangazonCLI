@@ -96,19 +96,28 @@ namespace BangazonCLI
                 // By Ryan
                 if (choice == 3)
                     {
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         Console.WriteLine("Enter a payment type (visa, mastercard, etc)");
                         Console.Write("> ");
                         string paymentType= Console.ReadLine();
                         Console.WriteLine("Enter the account # associated with your payment type");
                         Console.Write("> ");
-                        string accountNum= Console.ReadLine();
                         int customerId = ActiveCustomer.activeCustomerId;
+                        string accountNum= Console.ReadLine();
                         int paymentId = payment.CreatePaymentType(new PaymentType(customerId ,paymentType, accountNum));
+                        } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                        }
                     }
                 // If option 4 was chosen, create a new product for the logged in user
                 // By Mitchell
                 if (choice == 4)
                     {   
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         // product id is auto generated
                         Console.WriteLine ("Enter product title");
                         Console.Write ("> ");
@@ -143,6 +152,12 @@ namespace BangazonCLI
                         int SellerId = ActiveCustomer.activeCustomerId;         // customer id calls getter for active customer
                         int newProductId = productManager.CreateProduct(new Product(TypeId, Title, Int32.Parse(QuantityAvailable), Description, float.Parse(Price), SellerId));
                         Console.WriteLine("Product to sell successfully added.");
+                        }
+                        else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                        }
                     }
 
                 //Adding a product to an order
@@ -152,6 +167,8 @@ namespace BangazonCLI
 
                 if (choice == 5)
                     {
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         Console.WriteLine("*********************");
                         List<Product> productList = productManager.GetListOfProducts();
                         int? activeOrder = orderManager.CreateOrder();
@@ -183,13 +200,19 @@ namespace BangazonCLI
                             }
 
                         } while(productChoiceNum != 99);
-
+                        } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                        }
 
                     }
                 // If option 8 was chosen, edit an existing product
                 // By Mitchell
                 if (choice == 8)
                     {
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         // gets list of product belonging to that customer
                         var active = ActiveCustomer.activeCustomerId;
                         List<Product> productList = productManager.getCustomersProducts(active);
@@ -243,17 +266,32 @@ namespace BangazonCLI
                         }
                         productManager.updateProduct(Int32.Parse(productIdToEdit), columnToEdit, newValue);
                         Console.WriteLine("Product to sell successfully edited.");
+                    
+                    } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                        }
                     }
 
 
                     if(choice == 10)
                     {
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         orderManager.GetRevenueReport();
+                        } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                        }
                     }
 
 
                     if (choice == 6)
                     {
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         int? orderId = orderManager.CheckForIncompleteOrder();
                         string total = orderManager.GetOrderTotal(orderId);
                         Console.WriteLine($"Your order total is ${total}. Ready to purchase"); 
@@ -282,13 +320,20 @@ namespace BangazonCLI
                             }
                         }
                         else {
+                            Console.WriteLine("Action cancelled");
                         }
-
+                        } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                        }
                 }
                 // If option 9 was chosen, display customer's list of stale products
                 // Program choices by Mitchell, product manager methods by team
                 if (choice == 9)
                     {
+                        if (ActiveCustomer.activeCustomerId != 0)
+                        {
                         Console.WriteLine("Here is the list of all stale products: ");
                         List<Product> staleProducts = productManager.getAllStaleProducts();
                         int counter = 0;
@@ -303,12 +348,19 @@ namespace BangazonCLI
                         if (staleChoice == counter) {
                             choice = 999;    // choosing 999 effectively returns user to main menu
                         }
+                    } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
+                    }
                     }
 
                         //By: Ryan McCarty
                         //Menu option for DELETE
                         if(choice ==7)
                         {
+                            if (ActiveCustomer.activeCustomerId != 0)
+                            {
                             Console.WriteLine("*************************************************");
                             Console.WriteLine("Enter a product Id");
                             int customerId = ActiveCustomer.activeCustomerId;
@@ -338,7 +390,12 @@ namespace BangazonCLI
                                 Console.WriteLine("Deletion failed");
                             }
                             
+                        } else {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please choose an active customer");
+                            Console.ResetColor();
                         }
+                    }
 
             } while (choice != 12);
         }
