@@ -100,7 +100,8 @@ namespace BangazonCLI.Managers
         {
             return new List<Order>();
         }
-
+        //Method Author: Andrew Rock
+        //This Method queries, and prints to console, a revenue report for the current active customer.  
         public void GetRevenueReport()
         {
             Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!");
