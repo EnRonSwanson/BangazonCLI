@@ -18,6 +18,8 @@ namespace BangazonCLI.Managers
             _db = db;
         }
 
+        //INSERT A NEW PRODUCT INTO THE PRODUCT TABLE
+        //by: Madeline
         public int CreateProduct(Product product)
         {
             // Inserting new product into db
@@ -34,6 +36,8 @@ namespace BangazonCLI.Managers
             return newProductId;
         }
 
+        //RETURNS A LIST OF EVERY PRODUCT THAT HAS BEEN CREATED BY THE CUSTOMER
+        //by: Ryan
         public List<Product> getCustomersProducts(int sellerId)
         {
             _db.Query($"select * from product where product.sellerId = {sellerId}",
@@ -58,6 +62,8 @@ namespace BangazonCLI.Managers
             });
             return _products;
         }
+        //SELECTS 1 PRODUCT FROM THE ACTIVE CUSTOMER
+        //by: Ryan
         public Product getSingleProduct(int productId)
         {
            	Product singleProduct= null;
@@ -72,17 +78,25 @@ namespace BangazonCLI.Managers
             return singleProduct;
         }
 
+        //SELECTING AN ACTIVE CUSTOMERS PRODUCT WE CAN PASS IN THE VALUES WE WANT TO CHANGE
+        //by: Ryan and Mitchell
         public bool updateProduct(int productId, string columnToEdit, string newValue)
         {
            _db.Update($"update product set {columnToEdit}='{newValue}' where productId= {productId}");
            return true;
         }
 
+        //AFTER RECEIVING AN ACTIVE CUSTOMERS PRODUCTID
+        //IT CAN THEN BE DELTED FROM THE DATABASE
+        //by: Ryan
         public bool deleteProduct(int prodId)
         {
             _db.Delete($"DELETE from product where productId={prodId}");
             return true;
         }
+
+        //RETURNS A LIST OF CUSTOMER PRODUCTS THAT ARE NOT ON ANY ORDERS
+        //by: Ryan
         public List<Product> getActiveCustomersNonOrderProdcuts(int activeCustomer)
         {
             _db.Query($"select product.price, product.title, product.description,product.productid, product.sellerID, product.quantityavailable from product where product.productid not in (select orderproduct.productID from orderproduct) and product.sellerID= {activeCustomer}",
@@ -118,7 +132,7 @@ namespace BangazonCLI.Managers
 
             return _products;
         }
-
+        //RETURNS A LIST OF PRODUCTS THAT ARE STALE (180 OLD PRODUCTS, ORDERS THAT HAVEN'T BEEN COMPLETED AND ARE 90 DAYS OLD AND PRODUCTS ON ORDERS THAT HAVE BEEN COMPLETED BUT HAVE A REMAINING QUANTITY)
         // by Ryan
         public List<Product> getAllStaleProducts()
         {
